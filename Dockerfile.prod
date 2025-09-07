@@ -1,12 +1,14 @@
 FROM public.ecr.aws/lambda/nodejs:22 AS builder
 WORKDIR /usr/app
 COPY ./ ./
-RUN npm install
-RUN npm run build
+RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
+RUN pnpm install --frozen-lockfile
+RUN pnpm build
 COPY ./package*.json ./dist/
 ENV npm_config_ignore_scripts=true
-RUN cd dist && npm install --omit=dev
- 
+WORKDIR /usr/app/dist
+RUN pnpm install --prod --frozen-lockfile 
+
 FROM public.ecr.aws/lambda/nodejs:22
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/dist/* ./
