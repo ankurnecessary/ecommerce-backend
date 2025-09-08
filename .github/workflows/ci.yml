@@ -18,11 +18,20 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm setup
+          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+        shell: bash
+        env:
+          SHELL: /bin/bash
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run lint
-        run: npm run lint
+        run: pnpm lint
 
       - name: Run tests
-        run: npm test
+        run: pnpm test
