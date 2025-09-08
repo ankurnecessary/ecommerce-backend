@@ -25,8 +25,14 @@ WORKDIR /usr/src/app
 #     --mount=type=cache,target=/root/.npm \
 #     npm install
 
-COPY package*.json ./
-RUN npm install
+# Enable Corepack and pnpm
+RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
+
+# Copy files necessary for package installation
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Installing packages
+RUN pnpm install --frozen-lockfile
 
 # Run the application as a non-root user.
 USER node
@@ -38,4 +44,4 @@ COPY . .
 EXPOSE 5000
 
 # Run the application.
-CMD npm run dev
+CMD ["pnpm", "dev"]

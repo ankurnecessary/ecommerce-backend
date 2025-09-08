@@ -8,16 +8,14 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # Check if Docker is installed
-if ! command -v docker &> /dev/null
-then
-    echo -e "${YELLOW}***Docker is not installed. Please install Docker and try again.***${NC}"
-    exit 1
+if ! docker --version >/dev/null 2>&1; then
+  echo "***Docker is not installed or not functioning.***"
+  exit 1
 fi
 
 # Check if AWS CLI is installed
-if ! command -v aws &> /dev/null
-then
-    echo -e "${YELLOW}***AWS CLI is not installed. Please install AWS CLI and try again.***${NC}"
+if ! aws --version > /dev/null 2>&1; then
+    echo  "***AWS CLI is not installed. Please install AWS CLI and try again.***"
     exit 1
 fi
 
