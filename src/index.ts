@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
-
+import indexRoutes from './routes/index';
 dotenv.config();
 const app = express();
 
@@ -26,8 +26,10 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
   next();
 });
 
-app.get('/welcome', (req: Request, res: Response) => {
-  res.send(`Welcome to ecomerce APIs on ${process.env.NODE_ENV} server!`);
+app.use('/api', indexRoutes);
+
+app.get('/api/categories/parents', (req: Request, res: Response) => {
+  res.send(['category1']);
 });
 
 if (process.env.NODE_ENV === 'development') {
