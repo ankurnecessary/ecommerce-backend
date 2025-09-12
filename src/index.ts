@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
 import indexRoutes from './routes/index';
+import categoriesRoutes from './routes/categories';
 dotenv.config();
 const app = express();
 
@@ -27,10 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
 });
 
 app.use('/api', indexRoutes);
-
-app.get('/api/categories/parents', (req: Request, res: Response) => {
-  res.send(['category1']);
-});
+app.use('/api/categories', categoriesRoutes);
 
 if (process.env.NODE_ENV === 'development') {
   // Local development mode

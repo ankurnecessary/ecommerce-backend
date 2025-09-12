@@ -12,8 +12,8 @@ method: GET
 response: 
 [
   {
-    id: jfd,
-    category: 'Category'
+    id: 'jfd',
+    name: 'Category1'
   },
   ...
 ]
