@@ -24,7 +24,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json'
+    project: ['./tsconfig.scripts.json']
   },
   rules: {
     semi: ['error', 'always'], // Enforces semicolons at the end of statements
