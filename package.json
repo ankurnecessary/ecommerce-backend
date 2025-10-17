@@ -14,7 +14,8 @@
     "prepare": "husky",
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "prod:create": "sh ./shell-scripts/prod-create.sh",
-    "prod:update": "sh ./shell-scripts/prod-update.sh"
+    "prod:update": "sh ./shell-scripts/prod-update.sh",
+    "openapi": "ts-node scripts/swagger/generate-openapi"
   },
   "author": "",
   "license": "ISC",
