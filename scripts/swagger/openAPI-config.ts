@@ -9,7 +9,7 @@ const options = {
     },
     servers: [{ url: 'http://localhost:5000/api' }]
   },
-  apis: ['./routes/*.js']
+  apis: ['./src/routes/*.ts']
 };
 
 export default swaggerJSDoc(options);

@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import yaml from 'yaml';
 import openAPI from './openAPI-config';
 
