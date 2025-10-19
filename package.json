@@ -15,7 +15,8 @@
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "prod:create": "sh ./shell-scripts/prod-create.sh",
     "prod:update": "sh ./shell-scripts/prod-update.sh",
-    "openapi": "ts-node scripts/swagger/generate-openapi"
+    "openapi": "ts-node scripts/swagger/generate-openapi",
+    "swagger": "sh ./shell-scripts/run-swagger.sh"
   },
   "author": "",
   "license": "ISC",
