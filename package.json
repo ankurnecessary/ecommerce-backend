@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
+    "dev": "pnpm run dev-server & pnpm run watch-openapi",
+    "dev-server": "ts-node-dev --respawn src/index.ts",
     "dev:transpile": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:docker": "docker compose up --build",
     "dev:docker:watch": "docker compose watch",
@@ -15,7 +16,7 @@
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "prod:create": "sh ./shell-scripts/prod-create.sh",
     "prod:update": "sh ./shell-scripts/prod-update.sh",
-    "openapi": "ts-node scripts/swagger/generate-openapi",
+    "watch-openapi": "nodemon --watch src --ext ts,json --exec \"ts-node scripts/swagger/generate-openapi\"",
     "swagger": "sh ./shell-scripts/run-swagger.sh"
   },
   "author": "",
@@ -36,6 +37,7 @@
     "eslint-plugin-promise": "^6.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
+    "nodemon": "^3.1.10",
     "prettier": "^3.4.2",
     "prisma": "^6.16.1",
     "resolve": "^1.22.10",
