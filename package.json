@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm run dev-server & pnpm run watch-openapi",
+    "dev": "pnpm run dev-server & pnpm run watch-openapi & pnpm run swagger",
     "dev-server": "ts-node-dev --respawn src/index.ts",
     "dev:transpile": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:docker": "docker compose up --build",
