@@ -1,9 +1,9 @@
-name: CI
+name: Linting and Testing 
 
 on:
   pull_request:
     branches:
-      - ecommerce-prisma-main
+      - main
 
 jobs:
   build:
