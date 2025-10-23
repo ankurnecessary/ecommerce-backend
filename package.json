@@ -17,9 +17,10 @@
     "prod:create": "sh ./shell-scripts/prod-create.sh",
     "prod:update": "sh ./shell-scripts/prod-update.sh",
     "openapi": "ts-node scripts/swagger/generate-openapi",
+    "validate-openapi": "npx @redocly/cli lint openapi.yaml",
     "watch-openapi": "nodemon --watch src --ext ts,json --exec \"ts-node scripts/swagger/generate-openapi\"",
     "swagger": "pnpm run openapi && sh ./shell-scripts/run-swagger.sh",
-    "redocly": "pnpm run openapi && npx @redocly/cli build-docs openapi.yaml -o documentation/api-docs/index.html"
+    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html"
   },
   "author": "",
   "license": "ISC",

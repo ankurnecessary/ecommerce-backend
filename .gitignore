@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 # API documentation
-documentation/api-docs
 openapi.yaml
+docs
