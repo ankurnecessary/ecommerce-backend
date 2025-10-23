@@ -1,0 +1,46 @@
+name: Deploy API Docs to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm setup
+          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+        shell: bash
+        env:
+          SHELL: /bin/bash
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Create openapi.yaml
+        run: pnpm run openapi
+
+      - name: Lint OpenAPI spec
+        run: pnpm run validate-openapi 
+
+      - name: Generate static API docs
+        run: pnpm run static-api-doc
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
