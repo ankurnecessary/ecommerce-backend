@@ -1,19 +1,19 @@
-name: Linting and Testing 
+name: Deploy API Docs to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -29,9 +29,18 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      
+      - name: Create openapi.yaml
+        run: pnpm run openapi
 
-      - name: Run lint
-        run: pnpm lint
+      - name: Lint OpenAPI spec
+        run: pnpm run validate-openapi 
 
-      - name: Run tests
-        run: pnpm test
+      - name: Generate static API docs
+        run: pnpm run static-api-doc
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
