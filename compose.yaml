@@ -8,9 +8,11 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
+  # Dev server - http://localhost:5000
   server:
     build:
       context: .
+      dockerfile: Dockerfile.dev
     container_name: ecommerce-backend-server
     environment:
       NODE_ENV: ${NODE_ENV} # ${NODE_ENV} is from .env file
@@ -24,6 +26,7 @@ services:
         - action: rebuild
           path: .
           
+  # Swagger link activation - http://localhost:8080
   swagger:
     image: swaggerapi/swagger-ui
     container_name: ecommerce-swagger
