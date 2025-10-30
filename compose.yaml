@@ -8,7 +8,7 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  # Dev server - http://localhost:5000
+  # Dev server - http://localhost:${PORT}
   server:
     build:
       context: .
@@ -17,7 +17,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV} # ${NODE_ENV} is from .env file
     ports:
-      - 5000:5000
+      - ${PORT}:${PORT}
     volumes:
       - .:/usr/src/app
     command: pnpm dev
