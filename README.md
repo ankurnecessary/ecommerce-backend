@@ -3,6 +3,9 @@
 This project gives a boiler plate code for a node project with typescript. It has following features enabled:
 
 1. Development using Hot reloading via Docker.
+2. Using Prisma ORM to handle database.
+3. Development using Docker container for postgresql DB.
+4. API Documentation via Swagger.
 
 ## Documentation
 
@@ -25,3 +28,11 @@ This project gives a boiler plate code for a node project with typescript. It ha
 13. `pnpm validate-openapi` - This command will validate the generated openapi.yaml.
 14. `pnpm watch-openapi` - This command will watch for changes in files to determine new content of opneapi.yaml.
 15. `pnpm static-api-doc` - This command will generate static API documentation using redocly at './docs' but this is used in CI / github workflow only.
+
+## Development
+
+Start development server and other utilities using command `pnpm dev:docker`. After that you can use following links to access respective utilities.
+
+1. You can access APIs @ <http://localhost:5000/api>.
+2. You can access swagger API documentation @ <http://http://localhost:8080/>
+3. You can access pgAdmin4 @ <http://http://localhost:8000/>.

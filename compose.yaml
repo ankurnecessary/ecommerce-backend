@@ -8,7 +8,8 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  # Dev server - http://localhost:5000
+  
+  # Dev server - http://localhost:${PORT}
   server:
     build:
       context: .
@@ -17,7 +18,7 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV} # ${NODE_ENV} is from .env file
     ports:
-      - 5000:5000
+      - ${PORT}:${PORT}
     volumes:
       - .:/usr/src/app
     command: pnpm dev
@@ -37,3 +38,39 @@ services:
       - ./scripts/swagger/translator.js:/usr/share/nginx/configurator/translator.js
     environment:
       SWAGGER_JSON: /spec/openapi.yaml
+
+  # Postgres DB
+  postgres:
+    image: postgres:18-alpine
+    container_name: ecommerce-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecommerce
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      
+  # PgAdmin postgresql client - http://localhost:80
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgdata:
+  pgadmin_data:

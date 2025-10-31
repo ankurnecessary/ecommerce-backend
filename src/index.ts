@@ -2,10 +2,9 @@ import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
-import dotenv from 'dotenv';
 import indexRoutes from './routes/index';
 import categoriesRoutes from './routes/categories';
-dotenv.config();
+import './config/env';
 const app = express();
 
 // Parse application/x-www-form-urlencoded
@@ -32,8 +31,9 @@ app.use('/api/categories', categoriesRoutes);
 
 if (process.env.NODE_ENV === 'development') {
   // Local development mode
-  app.listen(5000, () => {
-    console.log('Server running on port 5000');
+  const port = process?.env?.PORT ?? '5000';
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
   });
 } else {
   // AWS Lambda mode
