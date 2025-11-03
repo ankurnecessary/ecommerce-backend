@@ -12,25 +12,3 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model DashboardUser {
-  id         String     @id @default(uuid())
-  email      String     @unique
-  password   String
-  categories Category[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Category {
-  id        String   @id @default(uuid())
-  name      String
-  parentId  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  DashboardUser DashboardUser? @relation(fields: [createdBy], references: [id])
-  createdBy     String?
-
-  @@unique([parentId, name])
-}
