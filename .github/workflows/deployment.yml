@@ -37,10 +37,21 @@ jobs:
 
       - name: Make build
         run: pnpm build
-
-  deploy:
+  
+  deploy-db:
     runs-on: ubuntu-latest
     needs: test-and-build
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Database migration
+        uses: pnpm prisma migrate deploy
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: deploy-db
 
     steps:
       - name: Checkout code
