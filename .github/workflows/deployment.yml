@@ -46,8 +46,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Database migration
-        uses: pnpm prisma migrate deploy
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          pnpm setup
+          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+        shell: bash
+        env:
+          SHELL: /bin/bash
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: DB migration
+        run: pnpm prisma migrate deploy
+      
+      - name: Seeding DB
+        env:
+          NODE_ENV: production
+        run: pnpm prisma db seed
   
   deploy:
     runs-on: ubuntu-latest
