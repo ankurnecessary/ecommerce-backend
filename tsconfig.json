@@ -5,5 +5,5 @@
     "outDir": "./dist" /* Specify an output folder for all emitted files. */,
   },
   "include": ["**/*.ts", ".eslintrc.js"],
-  "exclude": ["scripts"]
+  "exclude": ["scripts", "./prisma.config.ts"]
 }
