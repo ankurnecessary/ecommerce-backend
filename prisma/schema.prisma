@@ -14,11 +14,15 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String
-  password String
-  createdBy String
-  createdAt DateTime @default(now())
-  updatedBy String
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  createdBy    String?
+  creator      User?    @relation(name: "createdBy", fields: [createdBy], references: [id], onDelete: SetNull)
+  createdUsers User[]   @relation(name: "createdBy")
+  createdAt    DateTime @default(now())
+  updatedBy    String?
+  updater      User?    @relation(name: "updatedBy", fields: [updatedBy], references: [id], onDelete: SetNull)
+  updatedUsers User[]   @relation(name: "updatedBy")
+  updatedAt    DateTime @updatedAt
 }
