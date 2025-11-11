@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
 import indexRoutes from './routes/index';
 import categoriesRoutes from './routes/categories';
-import './config/env';
+
 const app = express();
 
 // Parse application/x-www-form-urlencoded

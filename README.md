@@ -34,5 +34,5 @@ This project gives a boiler plate code for a node project with typescript. It ha
 Start development server and other utilities using command `pnpm dev:docker`. After that you can use following links to access respective utilities.
 
 1. You can access APIs @ <http://localhost:5000/api>.
-2. You can access swagger API documentation @ <http://http://localhost:8080/>
-3. You can access pgAdmin4 @ <http://http://localhost:8000/>.
+2. You can access swagger API documentation @ <http://localhost:8080/>
+3. You can access pgAdmin4 @ <http://localhost:8000/>.
