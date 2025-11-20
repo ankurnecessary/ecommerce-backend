@@ -2,8 +2,6 @@ import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
-import indexRoutes from './routes/index';
-import categoriesRoutes from './routes/categories';
 
 const app = express();
 
@@ -25,9 +23,6 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-
-app.use('/api', indexRoutes);
-app.use('/api/categories', categoriesRoutes);
 
 if (process.env.NODE_ENV === 'development') {
   // Local development mode
