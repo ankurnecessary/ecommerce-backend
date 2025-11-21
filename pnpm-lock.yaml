@@ -14,6 +14,9 @@ importers:
       '@as-integrations/express5':
         specifier: ^1.1.2
         version: 1.1.2(@apollo/server@5.1.0(graphql@16.12.0))(express@5.1.0)
+      '@graphql-tools/schema':
+        specifier: ^10.0.29
+        version: 10.0.29(graphql@16.12.0)
       '@prisma/client':
         specifier: ^6.19.0
         version: 6.19.0(prisma@6.19.0(typescript@5.3.3))(typescript@5.3.3)
@@ -32,6 +35,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      graphql-import-node:
+        specifier: ^0.0.5
+        version: 0.0.5(graphql@16.12.0)
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -1537,6 +1543,11 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
+
+  graphql-import-node@0.0.5:
+    resolution: {integrity: sha512-OXbou9fqh9/Lm7vwXT0XoRN9J5+WCYKnbiTalgFDvkQERITRmcfncZs6aVABedd5B85yQU5EULS4a5pnbpuI0Q==}
+    peerDependencies:
+      graphql: '*'
 
   graphql@16.12.0:
     resolution: {integrity: sha512-DKKrynuQRne0PNpEbzuEdHlYOMksHSUI8Zc9Unei5gTsMNA2/vMpoMz/yKba50pejK56qj98qM0SjYxAKi13gQ==}
@@ -4739,6 +4750,10 @@ snapshots:
   gopd@1.2.0: {}
 
   graphemer@1.4.0: {}
+
+  graphql-import-node@0.0.5(graphql@16.12.0):
+    dependencies:
+      graphql: 16.12.0
 
   graphql@16.12.0: {}
 
