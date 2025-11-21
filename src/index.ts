@@ -4,22 +4,14 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express5';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import schema from './schema';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
 
 const server = new ApolloServer({
-  typeDefs: `
-    type Query {
-      hello: String
-    }
-  `,
-  resolvers: {
-    Query: {
-      hello: () => 'Hello World!'
-    }
-  }
+  schema
 });
 
 async function startServer(): Promise<void> {
