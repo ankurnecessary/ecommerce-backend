@@ -18,15 +18,21 @@
     "openapi": "ts-node scripts/swagger/generate-openapi",
     "validate-openapi": "npx @redocly/cli lint openapi.yaml",
     "watch-openapi": "nodemon --watch src --ext ts,json --exec pnpm openapi",
-    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html"
+    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html",
+    "codegen": "graphql-codegen --config codegen.ts && pnpm prisma generate --schema=./prisma/schema.prisma"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@graphql-codegen/cli": "^6.1.0",
+    "@graphql-codegen/typescript": "^5.0.5",
+    "@graphql-codegen/typescript-resolvers": "^5.1.3",
     "@redocly/cli": "^2.7.0",
     "@types/bcrypt": "^6.0.0",
     "@types/body-parser": "^1.19.5",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.11",
     "@types/swagger-jsdoc": "^6.0.4",
@@ -41,6 +47,7 @@
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^6.4.0",
+    "graphql": "^16.12.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "nodemon": "^3.1.10",
@@ -54,10 +61,16 @@
     "yaml": "^2.8.1"
   },
   "dependencies": {
+    "@apollo/server": "^5.1.0",
+    "@as-integrations/express5": "^1.1.2",
+    "@graphql-tools/schema": "^10.0.29",
     "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
+    "graphql-import-node": "^0.0.5",
     "jsonwebtoken": "^9.0.2",
     "serverless-http": "^3.2.0",
     "swagger-ui-express": "^5.0.1"

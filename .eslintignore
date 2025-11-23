@@ -1,1 +1,4 @@
 scripts/swagger/translator.js
+src/types/resolver-types.ts
+# ignore TypeScript declaration files (these often aren't included in specific tsconfigs)
+**/*.d.ts
