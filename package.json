@@ -18,7 +18,8 @@
     "openapi": "ts-node scripts/swagger/generate-openapi",
     "validate-openapi": "npx @redocly/cli lint openapi.yaml",
     "watch-openapi": "nodemon --watch src --ext ts,json --exec pnpm openapi",
-    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html"
+    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html",
+    "codegen": "graphql-codegen --config codegen.ts && pnpm prisma generate --schema=./prisma/schema.prisma"
   },
   "author": "",
   "license": "ISC",
