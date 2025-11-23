@@ -132,3 +132,6 @@ dist
 # API documentation
 openapi.yaml
 docs
+
+# Ignore resolver type definitions
+src/types/resolver-types.ts
