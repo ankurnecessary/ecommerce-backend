@@ -4,6 +4,5 @@
     "rootDir": "./src" /* Specify the root folder within your source files. */,
     "outDir": "./dist" /* Specify an output folder for all emitted files. */,
   },
-  "include": ["**/*.ts", "**/*.d.ts", ".eslintrc.js"],
-  "exclude": ["scripts", "./prisma.config.ts"]
+  "exclude": ["./codegen.ts", "./prisma.config.ts", "./scripts"]
 }
