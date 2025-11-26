@@ -14,7 +14,7 @@ const server = new ApolloServer({
   schema
 });
 
-async function startServer(): Promise<void> {
+async function initApollo(): Promise<void> {
   await server.start();
   app.use(
     '/graphql',
@@ -26,18 +26,23 @@ async function startServer(): Promise<void> {
     express.json() as unknown as express.RequestHandler,
     expressMiddleware(server) as unknown as express.RequestHandler
   );
-  if (process.env.NODE_ENV === 'development') {
-    // Local development mode
-    const port = process?.env?.PORT ?? '5000';
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}/graphql`);
-    });
-  } else {
-    // AWS Lambda mode
-    module.exports.handler = serverless(app);
-  }
 }
+const ready = initApollo();
 
-startServer().catch((error) => {
-  console.error({ error });
-});
+// For AWS lamda. It needs a handler to be exported
+export const handler = async (
+  event: Record<string, unknown>,
+  context: Record<string, unknown>
+): Promise<unknown> => {
+  await ready; // ensure Apollo is started before handling requests
+  const expressHandler = serverless(app);
+  return await expressHandler(event, context);
+};
+
+if (process.env.NODE_ENV === 'development') {
+  // Local development mode
+  const port = process?.env?.PORT ?? '5000';
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}/graphql`);
+  });
+}
