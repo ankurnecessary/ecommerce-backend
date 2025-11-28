@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Commit SHA, branch, or tag to deploy'
+        required: true
+        default: main
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
@@ -11,7 +18,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -53,7 +61,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -84,7 +93,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          ref: ${{ github.event.inputs.ref }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
