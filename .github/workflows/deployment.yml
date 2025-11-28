@@ -3,8 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - ecommerce-prisma-main
-
+      - rollback-branch
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
