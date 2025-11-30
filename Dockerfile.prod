@@ -4,12 +4,12 @@ COPY ./ ./
 RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 RUN pnpm install --frozen-lockfile
 RUN pnpm build
-COPY ./package*.json ./dist/
-ENV npm_config_ignore_scripts=true
-WORKDIR /usr/app/dist
-RUN pnpm install --prod --frozen-lockfile 
+COPY ./package.json ./pnpm-lock.yaml ./dist/
+RUN cp dist/ .. -r
+WORKDIR /usr/dist
+RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 FROM public.ecr.aws/lambda/nodejs:22
 WORKDIR ${LAMBDA_TASK_ROOT}
-COPY --from=builder /usr/app/dist/* ./
+COPY --from=builder /usr/dist/* ./
 CMD ["index.handler"]
