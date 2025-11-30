@@ -1,16 +1,21 @@
+# Builder
 FROM public.ecr.aws/lambda/nodejs:22 AS builder
 WORKDIR /usr/app
 COPY ./ ./
 RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 RUN pnpm install --frozen-lockfile
-RUN pnpm codegen 
 RUN pnpm build
-COPY ./package*.json ./dist/
-ENV npm_config_ignore_scripts=true
-WORKDIR /usr/app/dist
-RUN pnpm install --prod --frozen-lockfile 
 
+# Production deps only
+FROM public.ecr.aws/lambda/nodejs:22 AS deps
+WORKDIR /usr/app
+COPY package.json pnpm-lock.yaml ./
+RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
+RUN pnpm install --prod --frozen-lockfile --ignore-scripts
+
+# Final
 FROM public.ecr.aws/lambda/nodejs:22
 WORKDIR ${LAMBDA_TASK_ROOT}
-COPY --from=builder /usr/app/dist/* ./
+COPY --from=deps /usr/app/node_modules ./
+COPY --from=builder /usr/app/dist ./
 CMD ["index.handler"]
