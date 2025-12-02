@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"pnpm watch-openapi\" \"pnpm dev-server\"",
-    "dev-server": "ts-node-dev --respawn src/index.ts",
+    "dev-server": "pnpm codegen && ts-node-dev --respawn src/index.ts",
     "dev:transpile": "ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:docker": "pnpm openapi && docker compose up --build",
     "build": "pnpm codegen && tsc && copyfiles -u 1 src/**/*.graphql dist/",
