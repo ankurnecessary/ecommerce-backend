@@ -6,6 +6,9 @@ This project gives a boiler plate code for a node project with typescript. It ha
 2. Using Prisma ORM to handle database.
 3. Development using Docker container for postgresql DB.
 4. API Documentation via Swagger.
+5. There are 2 main branches i.e. main and main-rest
+   1. `main` - GraphQL specific
+   2. `main-rest` - REST specific
 
 ## Documentation
 
