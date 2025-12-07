@@ -11,7 +11,8 @@ dotenv.config();
 const app = express();
 
 const server = new ApolloServer({
-  schema
+  schema,
+  introspection: process.env.NODE_ENV !== 'production'
 });
 
 async function initApollo(): Promise<void> {
