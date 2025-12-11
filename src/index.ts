@@ -1,6 +1,6 @@
+import 'dotenv/config';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import bodyParser from 'body-parser';
 import serverless from 'serverless-http';
 import indexRoutes from './routes/index';
 import categoriesRoutes from './routes/categories';
@@ -8,10 +8,10 @@ import categoriesRoutes from './routes/categories';
 const app = express();
 
 // Parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Parse application/json
-app.use(bodyParser.json());
+app.use(express.json());
 
 // To  handle CORS error in the browser
 app.use((req: Request, res: Response, next: NextFunction): void => {
