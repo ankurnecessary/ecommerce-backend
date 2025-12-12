@@ -29,13 +29,13 @@ app.use((req: Request, res: Response, next: NextFunction): void => {
 app.use('/api', indexRoutes);
 app.use('/api/categories', categoriesRoutes);
 
+// AWS Lambda mode
+export const handler = serverless(app);
+
 if (process.env.NODE_ENV === 'development') {
   // Local development mode
   const port = process?.env?.PORT ?? '5000';
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
-} else {
-  // AWS Lambda mode
-  module.exports.handler = serverless(app);
 }
