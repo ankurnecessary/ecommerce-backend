@@ -3,7 +3,7 @@ name: Deploy API Docs to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main-rest
 
 jobs:
   build-and-deploy:

@@ -3,7 +3,7 @@ name: Linting and Testing
 on:
   pull_request:
     branches:
-      - main
+      - main-rest
 
 jobs:
   build:

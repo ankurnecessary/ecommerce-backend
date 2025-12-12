@@ -3,7 +3,7 @@ name: Deployment
 on:
   push:
     branches:
-      - main
+      - main-rest
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
