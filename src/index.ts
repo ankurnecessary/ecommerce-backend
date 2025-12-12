@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import type { Request, Response, NextFunction } from 'express';
 import serverless from 'serverless-http';
-import indexRoutes from './routes/index';
-import categoriesRoutes from './routes/categories';
+import indexRoutes from './routes/index.js';
+import categoriesRoutes from './routes/categories.js';
 
 const app = express();
 
