@@ -3,6 +3,7 @@ WORKDIR /usr/app
 COPY ./ ./
 RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 RUN pnpm install --frozen-lockfile
+RUN pnpm prisma generate
 RUN pnpm build
 COPY ./package*.json ./dist/
 ENV npm_config_ignore_scripts=true
