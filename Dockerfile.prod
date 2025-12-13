@@ -1,15 +1,19 @@
-FROM public.ecr.aws/lambda/nodejs:22 AS builder
+ARG DATABASE_URL
+ARG NODE_VERSION=22.16.0
+FROM public.ecr.aws/lambda/nodejs:${NODE_VERSION} AS builder
 WORKDIR /usr/app
 COPY ./ ./
 RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 RUN pnpm install --frozen-lockfile
+ENV DATABASE_URL=${DATABASE_URL}
+RUN pnpm prisma generate
 RUN pnpm build
 COPY ./package*.json ./dist/
 ENV npm_config_ignore_scripts=true
 WORKDIR /usr/app/dist
 RUN pnpm install --prod --frozen-lockfile 
 
-FROM public.ecr.aws/lambda/nodejs:22
+FROM public.ecr.aws/lambda/nodejs:${NODE_VERSION}
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/dist/* ./
 CMD ["index.handler"]

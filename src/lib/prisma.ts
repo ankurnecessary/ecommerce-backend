@@ -1,20 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import 'dotenv/config';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../generated/prisma/client.js';
 
-// Add type to globalThis for Prisma singleton
-declare global {
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined;
-}
+const connectionString = `${process.env.DATABASE_URL}`;
 
-let prisma: PrismaClient;
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
 
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
-} else {
-  if (globalThis.prisma === undefined) {
-    globalThis.prisma = new PrismaClient();
-  }
-  prisma = globalThis.prisma;
-}
-
-export default prisma;
+export { prisma };

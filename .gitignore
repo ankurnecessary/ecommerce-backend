@@ -132,3 +132,6 @@ dist
 # API documentation
 openapi.yaml
 docs
+
+# Prisma generated files
+src/generated
