@@ -75,6 +75,9 @@ jobs:
       - name: DB migration
         run: pnpm prisma migrate deploy
 
+      - name: Generating prisma files
+        run: pnpm prisma generate
+        
       - name: Seeding DB
         run: pnpm prisma db seed
 
