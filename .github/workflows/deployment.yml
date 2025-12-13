@@ -77,7 +77,12 @@ jobs:
 
       - name: Generating prisma files
         run: pnpm prisma generate
-        
+
+      - name: Write Aiven CA cert to file
+        run: |
+          mkdir -p prisma
+          echo "${{ secrets.AIVEN_CA_CERT }}" > prisma/ca.pem 
+
       - name: Seeding DB
         run: pnpm prisma db seed
 
@@ -96,8 +101,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Read Node version
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV
+
       - name: Building a new docker image using Dockerfile.prod
-        run: docker buildx build --platform linux/amd64 --provenance=false -t docker-image:test -f Dockerfile.prod --build-arg NODE_VERSION=$(cat .nvmrc) --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --provenance=false \
+            -t docker-image:test \
+            -f Dockerfile.prod \
+            --build-arg NODE_VERSION="${NODE_VERSION}" \
+            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            .
 
       - name: Tagging the docker image for AWS ECR
         run: docker tag docker-image:test ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}:latest
