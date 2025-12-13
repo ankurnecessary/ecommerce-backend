@@ -94,7 +94,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Building a new docker image using Dockerfile.prod
-        run: docker buildx build --platform linux/amd64 --provenance=false -t docker-image:test -f Dockerfile.prod --build-arg NODE_VERSION=$(cat .nvmrc) .
+        run: docker buildx build --platform linux/amd64 --provenance=false -t docker-image:test -f Dockerfile.prod --build-arg NODE_VERSION=$(cat .nvmrc) --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
 
       - name: Tagging the docker image for AWS ECR
         run: docker tag docker-image:test ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.AWS_LAMBDA_FUNCTION_NAME }}:latest
