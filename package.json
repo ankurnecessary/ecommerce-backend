@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"pnpm watch-openapi\" \"pnpm dev:server\"",
     "dev:server": "tsx watch src/index.ts",
-    "dev:docker": "pnpm openapi && docker compose up --build",
+    "dev:docker": "sed -i \"s/^NODE_VERSION=.*/NODE_VERSION=$(cat .nvmrc)/\" .env && pnpm openapi && docker compose up --build",
     "build": "tsc",
     "start": "node dist/index.js",
     "build:start": "tsc && node ./dist/index.js",
