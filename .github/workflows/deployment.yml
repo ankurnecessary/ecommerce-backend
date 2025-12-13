@@ -77,7 +77,12 @@ jobs:
 
       - name: Generating prisma files
         run: pnpm prisma generate
-        
+
+      - name: Write Aiven CA cert to file
+        run: |
+          mkdir -p prisma
+          echo "${{ secrets.AIVEN_CA_CERT }}" > prisma/ca.pem 
+
       - name: Seeding DB
         run: pnpm prisma db seed
 
