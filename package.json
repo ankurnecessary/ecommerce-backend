@@ -18,7 +18,8 @@
     "openapi": "tsx scripts/swagger/generate-openapi",
     "validate-openapi": "npx @redocly/cli lint openapi.yaml",
     "watch-openapi": "nodemon --watch src --ext ts,json --exec pnpm openapi",
-    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html"
+    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html",
+    "reset:db": "prisma migrate reset && pnpm prisma db seed"
   },
   "author": "",
   "license": "ISC",
