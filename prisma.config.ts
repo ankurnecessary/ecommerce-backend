@@ -21,6 +21,10 @@ const constructDatabaseUrl = (): string => {
     env('PGDATABASE') !== undefined && env('PGDATABASE') !== ''
       ? env('PGDATABASE')
       : '';
+  const PGCONNVARS =
+    env('NODE_ENV') !== 'development'
+      ? 'sslmode=verify-full&sslrootcert=prisma/ca.pem'
+      : 'schema=public';
 
   if (PGUSER === '' || PGPASSWORD === '' || PGDATABASE === '') {
     throw new Error(
@@ -28,7 +32,7 @@ const constructDatabaseUrl = (): string => {
     );
   }
 
-  return `postgresql://${encodeURIComponent(PGUSER)}:${encodeURIComponent(PGPASSWORD)}@${PGHOST}:${PGPORT}/${PGDATABASE}`;
+  return `postgresql://${encodeURIComponent(PGUSER)}:${encodeURIComponent(PGPASSWORD)}@${PGHOST}:${PGPORT}/${PGDATABASE}?${PGCONNVARS}`;
 };
 
 export default defineConfig({
