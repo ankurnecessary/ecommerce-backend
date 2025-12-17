@@ -6,10 +6,10 @@ import categoriesRoutes from './routes/categories.js';
 const app = express();
 
 // Parse application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '100kb ' }));
 
 // Parse application/json
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
 
 // To  handle CORS error in the browser
 app.use((req: Request, res: Response, next: NextFunction): void => {
