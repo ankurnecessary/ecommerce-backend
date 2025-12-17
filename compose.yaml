@@ -16,6 +16,7 @@ services:
       dockerfile: Dockerfile.dev
       args:
         NODE_VERSION: ${NODE_VERSION}
+        PNPM_VERSION: ${PNPM_VERSION}
     container_name: ecommerce-backend-server
     environment:
       NODE_ENV: ${NODE_ENV} # ${NODE_ENV} is from .env file
