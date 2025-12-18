@@ -1,7 +1,7 @@
 import express from 'express';
-import type { Request, Response, NextFunction } from 'express';
 import indexRoutes from './routes/index.js';
 import categoriesRoutes from './routes/categories.js';
+import cors from 'cors';
 
 const app = express();
 
@@ -12,18 +12,16 @@ app.use(express.urlencoded({ extended: true, limit: '100kb ' }));
 app.use(express.json({ limit: '100kb' }));
 
 // To  handle CORS error in the browser
-app.use((req: Request, res: Response, next: NextFunction): void => {
-  // We can set these headers conditionally, if we want our APIs to be accessed from multiple domains.
-  // But right now we are entertaining requests from any domain
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, PATCH, DELETE'
-  );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
+app.use(
+  cors({
+    origin: ['http://localhost:5000'], // allowed domains
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // allowed headers
+    credentials: true // allow cookies/auth headers
+  })
+);
 
+// Routes
 app.use('/api', [indexRoutes]);
 app.use('/api/categories', categoriesRoutes);
 
