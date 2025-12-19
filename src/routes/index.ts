@@ -3,8 +3,8 @@ import type { Request, Response } from 'express';
 
 const router = Router();
 
+// curl http://localhost:5000/api
 router.get('/', (req: Request, res: Response) => {
-  res.send(`Welcome to ecomerce APIs on ${process.env.NODE_ENV} server!`);
+  res.json({ message: 'Welcome to ecommerce APIs!' });
 });
-
 export default router;
