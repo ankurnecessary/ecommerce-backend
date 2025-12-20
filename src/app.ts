@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import apiRouter from './routes/api.js';
+import apiRouter from './api/routes.js';
 
 const app = express();
 
@@ -13,6 +13,7 @@ app.use(express.json({ limit: '100kb' }));
 // To  handle CORS error in the browser
 app.use(
   cors({
+    // [ ]: Make these domains configurable as per NODE_ENV value
     origin: ['http://localhost:5000'], // allowed domains
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // allowed headers
