@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import serverless from 'serverless-http';
-import app from './app.js';
+import { createApp } from './app.js';
 import { config } from './config/env.js';
+
+const app = createApp();
 
 // AWS Lambda mode
 export const handler = serverless(app);
