@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import apiRouter from './api/router.js';
 import { config } from './config/env.js';
+import { createRateLimiter } from './shared/middlewares/rate-limiter.js';
 
 const app = express();
 
@@ -26,6 +27,10 @@ app.use(
 // Routes
 // [ ]: Add global rate-limiter
 // [x]: Also introduce a config folder for constants and environment variables
-app.use('/api', apiRouter);
+const globalLimiter = createRateLimiter({
+  windowMs: 60 * 1000,
+  max: 100
+});
+app.use('/api', globalLimiter, apiRouter);
 
 export default app;
