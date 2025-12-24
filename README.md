@@ -40,3 +40,8 @@ Start development server and other utilities using command `pnpm dev:docker`. Af
 1. You can access APIs @ <http://localhost:5000/api>.
 2. You can access swagger API documentation @ <http://localhost:8080/>
 3. You can access pgAdmin4 @ <http://localhost:8000/>.
+
+## Middlewares
+
+1. [validate.ts](https://github.com/ankurnecessary/ecommerce-backend/blob/main-rest/src/shared/middlewares/validate.ts) - Middleware to validate the data input received from a user via Zod.
+2. [rate-limiter.ts](https://github.com/ankurnecessary/ecommerce-backend/blob/main-rest/src/shared/middlewares/rate-limiter.ts) - Middleware to apply rate-limiting on various endpoints.
