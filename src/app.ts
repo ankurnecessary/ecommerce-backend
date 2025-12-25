@@ -4,6 +4,7 @@ import cors from 'cors';
 import apiRouter from './api/router.js';
 import { config } from './config/env.js';
 import { createRateLimiter } from './shared/middlewares/rate-limiter.js';
+import { GLOBAL_RATE_LIMITS } from './config/constants.js';
 
 export function createApp(): Express {
   const app = express();
@@ -29,11 +30,12 @@ export function createApp(): Express {
   // Routes
   // [x]: Add global rate-limiter
   // [x]: Testing global rate-limiter
-  // TODO: Does createApp() function works in production or not?
+  // [ ]: Does createApp() function works in production or not?
   // [x]: Also introduce a config folder for constants and environment variables
+  // [x]: Add rate-limit numbers in config file so that actual implimentaion and test cases will run against the same numbers.
   const globalLimiter = createRateLimiter({
-    windowMs: 60 * 1000,
-    max: 100
+    windowMs: GLOBAL_RATE_LIMITS.TIME_WINDOW,
+    max: GLOBAL_RATE_LIMITS.CONNECTIONS_PER_IP
   });
   app.use('/api', globalLimiter, apiRouter);
 

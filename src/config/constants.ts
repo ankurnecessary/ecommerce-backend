@@ -1,0 +1,4 @@
+export const GLOBAL_RATE_LIMITS = {
+  TIME_WINDOW: 60 * 1000,
+  CONNECTIONS_PER_IP: 100
+} as const;
