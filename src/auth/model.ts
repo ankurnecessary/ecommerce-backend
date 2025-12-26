@@ -1,18 +1,42 @@
 import { z } from 'zod';
+import { REGEX, VALIDATION_MESSAGES } from '../config/constants.js';
 
-export const loginInputSchema = z.object({
-  username: z.email({ message: 'Username should be a valid email address' }),
+export const loginInputSchema = z
+  .object({
+    username: z.string(),
+    password: z.string()
+  })
+  .superRefine((data, ctx) => {
+    const { username, password } = data;
+    // [ ]: Add regex in constant.ts
+    const isEmail = z.email().safeParse(username).success;
+    const hasMinLength = password.length >= 8;
+    const hasUpper = REGEX.UPPERCASE.test(password);
+    const hasNumber = REGEX.NUMBER.test(password);
+    const hasSpecial = REGEX.SPECIAL_CHAR.test(password);
+
+    if (!isEmail || !hasMinLength || !hasUpper || !hasNumber || !hasSpecial) {
+      ctx.addIssue({
+        code: 'custom',
+        message: VALIDATION_MESSAGES.INVALID_USERNAME_PASSWORD
+      });
+    }
+  });
+export type LoginInput = z.infer<typeof loginInputSchema>;
+
+export const registerInputSchema = z.object({
+  username: z.email({ message: VALIDATION_MESSAGES.INVALID_USERNAME_EMAIL }),
   password: z
     .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/[A-Z]/, {
-      message: 'Password must contain at least one uppercase letter'
+    .min(8, { message: VALIDATION_MESSAGES.INVALID_PASSWORD_LENGTH })
+    .regex(REGEX.UPPERCASE, {
+      message: VALIDATION_MESSAGES.INVALID_PASSWORD_UPPERCASE
     })
-    .regex(/[0-9]/, {
-      message: 'Password must contain at least one number'
+    .regex(REGEX.NUMBER, {
+      message: VALIDATION_MESSAGES.INVALID_PASSWORD_NUMBER
     })
-    .regex(/[^A-Za-z0-9]/, {
-      message: 'Password must contain at least one special character'
+    .regex(REGEX.SPECIAL_CHAR, {
+      message: VALIDATION_MESSAGES.INVALID_PASSWORD_SPECIAL_CHARACTER
     })
 });
-export type LoginInput = z.infer<typeof loginInputSchema>;
+export type registerInput = z.infer<typeof loginInputSchema>;

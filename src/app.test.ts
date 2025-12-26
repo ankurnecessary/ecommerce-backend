@@ -12,7 +12,7 @@ describe('/api', () => {
     await request(app).get('/api').expect(429);
   });
 
-  it('resets after windowMs', async () => {
+  it('resets after 1 minute', async () => {
     vi.useFakeTimers();
     const app = createApp();
     for (let i = 0; i < GLOBAL_RATE_LIMITS.CONNECTIONS_PER_IP; i++) {
