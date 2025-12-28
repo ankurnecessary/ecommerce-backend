@@ -8,8 +8,7 @@ export const login = (req: Request, res: Response): void => {
   // [ ]: Don't forget to add the openAPI documentation
   // [x]: Put login input validator in it's own middleware and remove it from controller
   try {
-    // Does combination of username and password exist in the database
-    // ???
+    // [ ]: Does combination of username and password exist in the database
 
     // If everything goes fine
     res.status(200).json({

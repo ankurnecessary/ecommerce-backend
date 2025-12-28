@@ -34,6 +34,7 @@ export function createApp(): Express {
   // [x]: Also introduce a config folder for constants and environment variables
   // [x]: Add rate-limit numbers in config file so that actual implimentaion and test cases will run against the same numbers.
   // [ ]: Write a global error-handler
+  // [ ]: Add a logger to list all the errors occurred in a file
   const globalLimiter = createRateLimiter({
     windowMs: GLOBAL_RATE_LIMITS.TIME_WINDOW,
     max: GLOBAL_RATE_LIMITS.CONNECTIONS_PER_IP

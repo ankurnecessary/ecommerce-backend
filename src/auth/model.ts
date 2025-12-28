@@ -8,7 +8,7 @@ export const loginInputSchema = z
   })
   .superRefine((data, ctx) => {
     const { username, password } = data;
-    // [ ]: Add regex in constant.ts
+    // [x]: Add regex in constant.ts
     const isEmail = z.email().safeParse(username).success;
     const hasMinLength = password.length >= 8;
     const hasUpper = REGEX.UPPERCASE.test(password);
