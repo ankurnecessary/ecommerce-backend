@@ -3,6 +3,12 @@ export const GLOBAL_RATE_LIMITS = {
   CONNECTIONS_PER_IP: 100
 } as const;
 
+export const LOGIN_RATE_LIMITS = {
+  TIME_WINDOW: 60 * 1000, // 1 minute
+  CONNECTIONS_PER_IP: 5,
+  MESSAGE: 'Too many login requests'
+} as const;
+
 export const VALIDATION_MESSAGES = {
   LOGIN_SUCCESSFUL: 'You are authenticated',
   INVALID_USERNAME_PASSWORD: 'Enter valid username and password',
