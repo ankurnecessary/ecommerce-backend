@@ -1,4 +1,4 @@
-import rateLimit from 'express-rate-limit';
+import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import type { RateLimitRequestHandler } from 'express-rate-limit';
 
 export const createRateLimiter = (options: {
@@ -11,6 +11,9 @@ export const createRateLimiter = (options: {
     max: options.max,
     standardHeaders: true,
     legacyHeaders: false,
-    message: options.message ?? 'Too many requests, please try again later.'
+    message: {
+      errors: [options.message ?? 'Too many requests, please try again later.']
+    },
+    keyGenerator: (req) => ipKeyGenerator(req.ip ?? '127.0.0.1', 56)
   });
 };

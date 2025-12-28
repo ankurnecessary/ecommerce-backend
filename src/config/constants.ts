@@ -1,3 +1,5 @@
+export const ONE_MINUTE = 60000;
+
 export const GLOBAL_RATE_LIMITS = {
   TIME_WINDOW: 60 * 1000, // 1 minute
   CONNECTIONS_PER_IP: 100

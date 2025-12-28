@@ -8,6 +8,7 @@ import { createRateLimiter } from '../shared/middlewares/rate-limiter.js';
 const router = Router();
 
 // [x]: Add specific rate-limiter for auth routes
+// [x]: Write test cases for rate limiter of /api/auth/login
 // [x]: Write test case for validation implemented for auth request data validation
 
 export const authLimiter = createRateLimiter({
