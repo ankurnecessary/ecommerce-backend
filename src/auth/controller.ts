@@ -9,6 +9,7 @@ export const login = (req: Request, res: Response): void => {
   // [x]: Put login input validator in it's own middleware and remove it from controller
   try {
     // [ ]: Does combination of username and password exist in the database
+    // [x]: Rectify API's database connection to postgres DB docker container. Between 2 docker containers
 
     // If everything goes fine
     res.status(200).json({
