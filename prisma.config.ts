@@ -22,9 +22,9 @@ const constructDatabaseUrl = (): string => {
       ? env('PGDATABASE')
       : '';
   const PGCONNVARS =
-    env('NODE_ENV') !== 'development'
-      ? 'sslmode=verify-full&sslrootcert=prisma/ca.pem'
-      : 'schema=public';
+    env('NODE_ENV') === 'development'
+      ? 'schema=public'
+      : 'sslmode=verify-full&sslrootcert=prisma/ca.pem';
 
   if (PGUSER === '' || PGPASSWORD === '' || PGDATABASE === '') {
     throw new Error(
