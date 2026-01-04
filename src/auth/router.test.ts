@@ -8,13 +8,18 @@ import {
 } from '../config/constants.js';
 import { authLimiter } from './router.js';
 import { ipKeyGenerator } from 'express-rate-limit';
+import { config } from '../config/env.js';
+// [x]: Set a separate setup for test database
 describe(`/api/auth/login rate-limiter`, () => {
   beforeEach(() => {
     authLimiter.resetKey(ipKeyGenerator('::ffff:127.0.0.1', 56));
   });
   it(`blocks after ${LOGIN_RATE_LIMITS.CONNECTIONS_PER_IP} requests in ${LOGIN_RATE_LIMITS.TIME_WINDOW / ONE_MINUTE} minute(s)`, async () => {
     const app = createApp();
-    const data = { username: 'hello@test.com', password: 'Sec1@ret' };
+    const data = {
+      username: config.ADMIN_EMAIL,
+      password: config.ADMIN_PASSWORD
+    };
     for (let i = 0; i < LOGIN_RATE_LIMITS.CONNECTIONS_PER_IP; i++) {
       await request(app).post('/api/auth/login').send(data).expect(200);
     }
@@ -24,7 +29,10 @@ describe(`/api/auth/login rate-limiter`, () => {
   it(`resets after ${LOGIN_RATE_LIMITS.TIME_WINDOW / ONE_MINUTE} minute(s)`, async () => {
     vi.useFakeTimers();
     const app = createApp();
-    const data = { username: 'hello@test.com', password: 'Sec1@ret' };
+    const data = {
+      username: config.ADMIN_EMAIL,
+      password: config.ADMIN_PASSWORD
+    };
     for (let i = 0; i < LOGIN_RATE_LIMITS.CONNECTIONS_PER_IP; i++) {
       await request(app).post('/api/auth/login').send(data).expect(200);
     }
@@ -38,7 +46,10 @@ describe(`/api/auth/login rate-limiter`, () => {
 
   it('separates limits by IP', async () => {
     const app = createApp();
-    const data = { username: 'hello@test.com', password: 'Sec1@ret' };
+    const data = {
+      username: config.ADMIN_EMAIL,
+      password: config.ADMIN_PASSWORD
+    };
     app.set('trust proxy', 'loopback'); // Important to allow X-Forwarded-For for various IPs
     for (let i = 0; i < LOGIN_RATE_LIMITS.CONNECTIONS_PER_IP - 1; i++) {
       await request(app)
@@ -68,7 +79,10 @@ describe('/api/auth/login', () => {
   });
   it(`should validate { username: 'hello@test.com', password: 'Sec1@ret' }`, async () => {
     const app = createApp();
-    const data = { username: 'hello@test.com', password: 'Sec1@ret' };
+    const data = {
+      username: config.ADMIN_EMAIL,
+      password: config.ADMIN_PASSWORD
+    };
     const response = await request(app)
       .post('/api/auth/login')
       .send(data)
@@ -90,7 +104,7 @@ describe('/api/auth/login', () => {
     );
   });
 
-  it(`should invalidate { username: 'hellotest.com', password: 'Sec1@ret' }`, async () => {
+  it(`should invalidate { username: 'hellotest.com', password: 'Sec1@ret' } because username is invalid`, async () => {
     const app = createApp();
     const data = { username: 'hellotest.com', password: 'Sec1@ret' };
     const response = await request(app)
@@ -103,7 +117,7 @@ describe('/api/auth/login', () => {
     );
   });
 
-  it(`should invalidate { username: 'hello@test.com', password: 'Sec1ret' }`, async () => {
+  it(`should invalidate { username: 'hello@test.com', password: 'Sec1ret' } because of password validation error`, async () => {
     const app = createApp();
     const data = { username: 'hello@test.com', password: 'Sec1ret' };
     const response = await request(app)
@@ -116,9 +130,38 @@ describe('/api/auth/login', () => {
     );
   });
 
-  it(`should invalidate { username: 'hello@test.com', password: 'Secret' }`, async () => {
+  it(`should invalidate { username: 'hello@test.com', password: 'Secret' } because of password validation error`, async () => {
     const app = createApp();
     const data = { username: 'hello@test.com', password: 'Secret' };
+    const response = await request(app)
+      .post('/api/auth/login')
+      .send(data)
+      .set('Accept', 'application/json');
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body.errors[0]).toEqual(
+      VALIDATION_MESSAGES.INVALID_USERNAME_PASSWORD
+    );
+  });
+
+  it(`should invalidate {"username": "something@test.com", "password": "Sec1@ret"} because username doesn't exist in database`, async () => {
+    const app = createApp();
+    const data = { username: 'something@test.com', password: 'Sec1@ret' };
+    const response = await request(app)
+      .post('/api/auth/login')
+      .send(data)
+      .set('Accept', 'application/json');
+    expect(response.headers['content-type']).toMatch(/json/);
+    expect(response.body.errors[0]).toEqual(
+      VALIDATION_MESSAGES.INVALID_USERNAME_PASSWORD
+    );
+  });
+
+  it('should invalidate {"username": "hello@test.com", "password": "Sec@ret"} because password is wrong', async () => {
+    const app = createApp();
+    const data = {
+      username: config.ADMIN_EMAIL,
+      password: config.ADMIN_PASSWORD + '1'
+    };
     const response = await request(app)
       .post('/api/auth/login')
       .send(data)
