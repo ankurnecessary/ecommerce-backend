@@ -17,7 +17,7 @@ This project gives a boiler plate code for a node project with typescript. It ha
 ## PNPM Scripts
 
 1. `pnpm dev` - This is a way to run the code while developing the project without using docker. Even Dockerfile uses this command to run the project inside the container.
-2. `pnpm dev:transpile` - It runs the code in dev mode without checking the types declared using typescript.
+2. `pnpm dev:server` - It runs the code in dev mode.
 3. `pnpm dev:docker`  - This command runs docker compoose file to spin up a development container. This will provide a URL for the APIs that we can use further while coding.
 4. `pnpm build` - This will just build a project and put the files in dist folder.
 5. `pnpm start` - This will start the project using the build files. So before running this command we should have a build in place via command `pnpm build`.
@@ -35,11 +35,13 @@ This project gives a boiler plate code for a node project with typescript. It ha
 
 ## Development
 
-Start development server and other utilities using command `pnpm dev:docker`. After that you can use following links to access respective utilities.
+1. Start development server and other utilities using command `pnpm dev:docker`. After that you can use following links to access respective utilities.
 
-1. You can access APIs @ <http://localhost:5000/api>.
-2. You can access swagger API documentation @ <http://localhost:8080/>
-3. You can access pgAdmin4 @ <http://localhost:8000/>.
+   1. You can access APIs @ <http://localhost:5000/api>.
+   2. You can access swagger API documentation @ <http://localhost:8080/>
+   3. You can access pgAdmin4 @ <http://localhost:8000/>.
+
+2. Run `pnpm db:reset` only once or when you want to reset the database.
 
 ## Middlewares
 

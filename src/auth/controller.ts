@@ -8,6 +8,7 @@ import { prisma } from '../lib/prisma.js';
 //  -d '{"username": "hello@test.com", "password": "Sec1@ret"}'
 export const login = async (req: Request, res: Response): Promise<void> => {
   // [ ]: Don't forget to add the openAPI documentation
+  // [ ]: How to create types using openAPI documentation that can be used react.js and next.js
   // [x]: Put login input validator in it's own middleware and remove it from controller
   // [ ]: Implement JSON web token
   // [x]: Update prisma's version
