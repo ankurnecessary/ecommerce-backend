@@ -47,7 +47,15 @@ module.exports = {
     'no-trailing-spaces': 'error',
     'space-in-parens': ['error', 'never'],
     'template-curly-spacing': ['error', 'never'],
-    'block-spacing': ['error', 'always']
+    'block-spacing': ['error', 'always'],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          arguments: false
+        }
+      }
+    ]
   },
   ignorePatterns: ['dist/**'] // Add this line to ignore the dist directory
 };

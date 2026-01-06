@@ -19,6 +19,7 @@ export const authLimiter = createRateLimiter({
   message: LOGIN_RATE_LIMITS.MESSAGE
 });
 router.use(authLimiter);
+// [x]: Remove Promise returned in function argument where a void return was expected.eslint@typescript-eslint/no-misused-promises while implementing global error handler
 router.post('/login', validate(loginInputSchema), login);
 
 export default router;
