@@ -9,15 +9,15 @@ import { prisma } from '../lib/prisma.js';
 export const login = async (req: Request, res: Response): Promise<void> => {
   // [ ]: Don't forget to add the openAPI documentation
   // [x]: Put login input validator in it's own middleware and remove it from controller
-  // [ ]: Vim: Is there a way to scroll a page line by line without moving cursor.
-  // [ ]: Update prisma's version
+  // [ ]: Implement JSON web token
+  // [x]: Update prisma's version
   try {
     const { username, password } = req.body as {
       username: string;
       password: string;
     };
 
-    // [ ]: Does combination of username and password exist in the database
+    // [x]: Does combination of username and password exist in the database
     // [x]: TEST: If username is invalid
     // [x]: TEST: If combination of username and password is invalid
     // [x]: Rectify API's database connection to postgres DB docker container. Between 2 docker containers
