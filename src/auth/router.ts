@@ -11,6 +11,7 @@ const router = Router();
 // [x]: Write test cases for rate limiter of /api/auth/login
 // [x]: Write test case for validation implemented for auth request data validation
 // [x]: Update .env.example
+// [x]: Create .env.test.example
 
 export const authLimiter = createRateLimiter({
   windowMs: LOGIN_RATE_LIMITS.TIME_WINDOW,
