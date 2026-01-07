@@ -32,6 +32,7 @@ This project gives a boiler plate code for a node project with typescript. It ha
 14. `pnpm watch-openapi` - This command will watch for changes in files to determine new content of opneapi.yaml.
 15. `pnpm static-api-doc` - This command will generate static API documentation using redocly at './docs' but this is used in CI / github workflow only.
 16. `pnpm db:reset` - This command will help in resetting database. This means all data will be deleted. IMPORTANT: Use it mindfully and only in dev environment.
+17. `pnpm db:dev:migrate` - To migrate newly make changes in schema.prisma to the database.
 
 ## Development
 
