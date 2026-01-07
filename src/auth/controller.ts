@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import type { Request, Response } from 'express';
 import { VALIDATION_MESSAGES } from '../config/constants.js';
-import { prisma } from '../lib/prisma.js';
+import { prisma } from '../shared/lib/prisma.js';
 
 // curl -i -X POST http://localhost:5000/api/auth/login
 //  -H "Content-Type: application/json"
