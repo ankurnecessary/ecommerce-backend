@@ -20,7 +20,8 @@
     "watch-openapi": "nodemon --watch src --ext ts,json --exec pnpm openapi",
     "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html",
     "db:reset": "prisma migrate reset && pnpm prisma db seed",
-    "db:dev:migrate": "prisma migrate dev && prisma generate"
+    "db:dev:migrate": "prisma migrate dev && prisma generate",
+    "db:type:generate": "prisma generate"
   },
   "author": "",
   "license": "ISC",
