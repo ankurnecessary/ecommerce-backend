@@ -17,6 +17,7 @@ model User {
   id           String   @id @default(uuid())
   email        String   @unique
   password     String
+  refreshToken String?  @unique
   createdBy    String?
   creator      User?    @relation(name: "createdBy", fields: [createdBy], references: [id], onDelete: SetNull)
   createdUsers User[]   @relation(name: "createdBy")
