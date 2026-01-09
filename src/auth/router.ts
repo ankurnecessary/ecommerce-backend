@@ -10,6 +10,7 @@ const router = Router();
 // [x]: Add specific rate-limiter for auth routes
 // [x]: Write test cases for rate limiter of /api/auth/login
 // [x]: Write test case for validation implemented for auth request data validation
+// [ ]: Check whether test command is working perfectly in github workflow.
 // [x]: Update .env.example
 // [x]: Create .env.test.example
 

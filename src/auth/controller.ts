@@ -1,7 +1,9 @@
-import bcrypt from 'bcrypt';
 import type { Request, Response } from 'express';
 import { VALIDATION_MESSAGES } from '../config/constants.js';
-import { prisma } from '../shared/lib/prisma.js';
+import type { User } from './types.js';
+import { getUser, saveRefreshToken } from './services.js';
+import { generateAccessToken, generateRefreshToken } from './utils/token.js';
+import { isPasswordValid } from './utils/password.js';
 
 // curl -i -X POST http://localhost:5000/api/auth/login
 //  -H "Content-Type: application/json"
@@ -22,11 +24,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     // [x]: TEST: If username is invalid
     // [x]: TEST: If combination of username and password is invalid
     // [x]: Rectify API's database connection to postgres DB docker container. Between 2 docker containers
-    const user = await prisma.user.findFirst({
-      where: {
-        email: username
-      }
-    });
+    const user: User | null = await getUser(username);
     if (user === null) {
       res.status(401).json({
         errors: [VALIDATION_MESSAGES.INVALID_USERNAME_PASSWORD]
@@ -34,19 +32,28 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
     // Verify the hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
+    // [ ]: Use Argon2id instead of bcrypt
+    if (!(await isPasswordValid(password, user.password))) {
       res.status(401).json({
         errors: [VALIDATION_MESSAGES.INVALID_USERNAME_PASSWORD]
       });
       return;
     }
 
+    // [ ]: Vim: How to delete a word when you are not at it's first or last character
+    // [ ]: Implement JSON web token
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+    await saveRefreshToken(refreshToken, user.id);
+
     // If everything goes fine
     res.status(200).json({
       message: VALIDATION_MESSAGES.LOGIN_SUCCESSFUL,
       data: {
-        username
+        id: user.id,
+        username,
+        accessToken,
+        refreshToken
       }
     });
   } catch (err) {
