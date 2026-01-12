@@ -58,6 +58,7 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16",
+    "vitest-mock-extended": "^3.1.0",
     "wait-on": "^9.0.3",
     "yaml": "^2.8.1"
   },
