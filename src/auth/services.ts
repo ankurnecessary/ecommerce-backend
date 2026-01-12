@@ -1,4 +1,4 @@
-import { prisma } from '../shared/lib/prisma.js';
+import { prisma } from '../shared/database/prisma.js';
 import type { User } from './types.js';
 
 export async function getUser(username: string): Promise<User | null> {

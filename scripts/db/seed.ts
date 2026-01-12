@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { prisma } from '../../src/shared/lib/prisma';
+import { prisma } from '../../src/shared/database/prisma';
 
 async function main(): Promise<void> {
   try {
