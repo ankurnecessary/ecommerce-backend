@@ -1,6 +1,8 @@
+import type { Mock } from 'vitest';
 import { describe, it, expect } from 'vitest';
-import { getUser } from './services.js';
+import { getUser, saveRefreshToken } from './services.js';
 import { prismaMock } from '../shared/database/__mocks__/prisma.js';
+import type { User } from '../generated/prisma/client.js';
 
 describe('getUser', () => {
   it('returns a user when found', async () => {
@@ -105,3 +107,98 @@ async function delayResolve<T>(value: T, ms: number): Promise<T> {
     }, ms)
   );
 }
+
+describe('saveRefreshToken', () => {
+  it('updates the refresh token successfully (happy path)', async () => {
+    const mockUser: User = {
+      id: '1',
+      email: 'test@example.com',
+      password: 'hashed',
+      refreshToken: null,
+      createdBy: null,
+      createdAt: new Date(),
+      updatedBy: null,
+      updatedAt: new Date()
+    };
+
+    prismaMock.user.update.mockResolvedValue(mockUser);
+
+    await expect(
+      saveRefreshToken('token123', 'user-1')
+    ).resolves.toBeUndefined();
+
+    const updateMock = prismaMock.user.update;
+    expect(updateMock).toHaveBeenCalledWith({
+      where: { id: 'user-1' },
+      data: { refreshToken: 'token123' }
+    });
+  });
+
+  it('calls prisma.user.update exactly once', async () => {
+    prismaMock.user.update.mockResolvedValue(undefined as unknown as User);
+
+    await saveRefreshToken('abc', 'user-2');
+
+    const updateMock = prismaMock.user.update as unknown as Mock;
+    expect(updateMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('propagates Prisma errors', async () => {
+    prismaMock.user.update.mockRejectedValue(new Error('DB error'));
+
+    await expect(saveRefreshToken('token', 'user-3')).rejects.toThrow(
+      'DB error'
+    );
+  });
+
+  it('returns void (undefined)', async () => {
+    prismaMock.user.update.mockResolvedValue(undefined as unknown as User);
+    await expect(saveRefreshToken('xyz', 'user-4')).resolves.toBeUndefined();
+  });
+
+  it('handles empty token input', async () => {
+    prismaMock.user.update.mockResolvedValue(undefined as unknown as User);
+
+    await saveRefreshToken('', 'user-5');
+
+    const updateMock = prismaMock.user.update as unknown as Mock;
+    expect(updateMock).toHaveBeenCalledWith({
+      where: { id: 'user-5' },
+      data: { refreshToken: '' }
+    });
+  });
+
+  it('handles empty userId input', async () => {
+    prismaMock.user.update.mockResolvedValue(undefined as unknown as User);
+
+    await saveRefreshToken('token123', '');
+
+    const updateMock = prismaMock.user.update as unknown as Mock;
+    expect(updateMock).toHaveBeenCalledWith({
+      where: { id: '' },
+      data: { refreshToken: 'token123' }
+    });
+  });
+
+  it('does not call any other Prisma methods', async () => {
+    prismaMock.user.update.mockResolvedValue(undefined as unknown as User);
+
+    await saveRefreshToken('token', 'user-6');
+
+    const updateMock = prismaMock.user.update as unknown as Mock;
+    expect(updateMock).toHaveBeenCalledTimes(1);
+
+    // Ensure no other model methods were touched
+    expect(prismaMock.user.findFirst).not.toHaveBeenCalled();
+    expect(prismaMock.user.create).not.toHaveBeenCalled();
+    expect(prismaMock.user.delete).not.toHaveBeenCalled();
+  });
+
+  it('awaits Prisma correctly (delayed resolution)', async () => {
+    prismaMock.user.update.mockImplementation(
+      () => delayResolve(null, 10) as any
+    );
+
+    await expect(saveRefreshToken('slow', 'user-7')).resolves.toBeUndefined();
+  });
+});
