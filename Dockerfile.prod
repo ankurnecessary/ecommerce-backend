@@ -2,13 +2,10 @@ ARG NODE_VERSION=22
 
 # Builder
 FROM public.ecr.aws/lambda/nodejs:${NODE_VERSION} AS builder
-ARG DATABASE_URL
 WORKDIR /usr/app
 COPY ./ ./
 RUN corepack enable && corepack prepare pnpm@10 --activate
 RUN pnpm install --frozen-lockfile
-ENV DATABASE_URL=${DATABASE_URL}
-RUN pnpm prisma generate
 RUN pnpm build
 
 #Final
