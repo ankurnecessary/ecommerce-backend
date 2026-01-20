@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 
 const router = Router();
 
-// curl http://localhost:5000/api
+// curl http://localhost:5000/api/v1
 router.get('/', (req: Request, res: Response) => {
   res.json({ message: 'Welcome to ecommerce APIs!' });
 });
