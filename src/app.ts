@@ -1,6 +1,5 @@
 import express from 'express';
 import indexRoutes from './routes/index.js';
-import categoriesRoutes from './routes/categories.js';
 import cors from 'cors';
 
 const app = express();
@@ -23,6 +22,5 @@ app.use(
 
 // Routes
 app.use('/api', [indexRoutes]);
-app.use('/api/categories', categoriesRoutes);
 
 export default app;
