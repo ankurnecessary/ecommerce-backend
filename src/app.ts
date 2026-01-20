@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import apiRouter from './routes/api.js';
-
+import indexRouter from './routes/index.js';
 const app = express();
 
 // Parse application/x-www-form-urlencoded
@@ -21,6 +20,6 @@ app.use(
 );
 
 // Routes
-app.use('/api', apiRouter);
+app.use('/api', indexRouter);
 
 export default app;
