@@ -20,6 +20,7 @@ services:
     container_name: ecommerce-backend-server
     environment:
       NODE_ENV: ${NODE_ENV} # ${NODE_ENV} is from .env file
+      DATABASE_URL: ${DATABASE_URL_DOCKER}
     ports:
       - ${PORT}:${PORT}
     volumes:
@@ -43,12 +44,12 @@ services:
       SWAGGER_JSON: /spec/openapi.yaml
 
   # Postgres DB
-  postgres:
+  db:
     image: postgres:18-alpine
     container_name: ecommerce-db
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
