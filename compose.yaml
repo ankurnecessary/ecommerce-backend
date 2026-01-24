@@ -23,9 +23,13 @@ services:
       DATABASE_URL: ${DATABASE_URL_DOCKER}
     ports:
       - ${PORT}:${PORT}
+      - '9229:9229'
+    depends_on:
+      db:
+        condition: service_healthy
     volumes:
       - .:/usr/src/app
-    command: pnpm dev
+    command: ${SERVER_COMMAND:-pnpm dev}
     develop:
       watch:
         - action: rebuild
