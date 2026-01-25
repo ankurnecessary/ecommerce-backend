@@ -42,6 +42,10 @@ Start development server and other utilities using command `pnpm dev:docker`. Af
 2. You can access swagger API documentation @ <http://localhost:8080/>
 3. You can access pgAdmin4 @ <http://localhost:8000/>.
 
+### How to generate auth or refresh token?
+
+`node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`
+
 ## How to debug?
 
 1. Start development server in debug mode using command `pnpm dev:docker:debug`.
