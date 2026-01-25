@@ -23,7 +23,7 @@ services:
       DATABASE_URL: ${DATABASE_URL_DOCKER}
     ports:
       - ${PORT}:${PORT}
-      - '9229:9229'
+      - '${PORT_DEBUG}:${PORT_DEBUG}'
     depends_on:
       db:
         condition: service_healthy
