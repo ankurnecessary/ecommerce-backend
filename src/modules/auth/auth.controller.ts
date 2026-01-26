@@ -4,10 +4,11 @@ import { UserRepositoryPrisma } from '../user/infrastructure/UserRepositoryPrism
 import { AuthRepositoryPrisma } from './infrastructure/AuthRepositoryPrisma.js';
 import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
 import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
+import { authConfig } from './config/auth.config.js';
 
 // curl -i -X POST http://localhost:5000/api/v1/auth/login
 //  -H "Content-Type: application/json"
-//  -d '{"username": "hello@test.com", "password": "sssssss"}'
+//  -d '{"username": "admin@ecommerce.com", "password": "YourP@ssword123"}'
 export const loginController = async (req: Request, res: Response) => {
   const { username: email, password } = req.body;
 
@@ -20,5 +21,24 @@ export const loginController = async (req: Request, res: Response) => {
     TokenServiceJWT
   );
 
-  res.status(200).json(result);
+  // Set HTTP-only cookies with SameSite protection
+  res.cookie('accessToken', result.accessToken, {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production', // HTTPS only in production
+    sameSite: 'strict', // [ ]: I will check it later when we will be interacting with the actual frontend
+    maxAge: Number(authConfig.accessToken.expiresIn) * 1000 // 15 minutes
+  });
+
+  res.cookie('refreshToken', result.refreshToken, {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production', // HTTPS only in production
+    sameSite: 'strict', // [ ]: I will check it later when we will be interacting with the actual frontend
+    maxAge: Number(authConfig.refreshToken.expiresIn) * 1000 // 7 days
+  });
+
+  // Return user data without tokens
+  res.status(200).json({
+    id: result.id,
+    username: result.username
+  });
 };

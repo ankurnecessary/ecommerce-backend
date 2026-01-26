@@ -1,6 +1,7 @@
 import { env } from '../../../shared/config/env.js';
 
 export const authConfig = {
+  nodeEnv: env.NODE_ENV,
   accessToken: {
     secret: env.AUTH_ACCESS_TOKEN_SECRET,
     expiresIn: env.AUTH_ACCESS_TOKEN_TTL
