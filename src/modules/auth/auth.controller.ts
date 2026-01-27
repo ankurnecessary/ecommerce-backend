@@ -6,9 +6,11 @@ import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
 import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
 import { authConfig } from './config/auth.config.js';
 
-// curl -i -X POST http://localhost:5000/api/v1/auth/login
+// curl -i
+//  -X POST http://localhost:5000/api/v1/auth/login
 //  -H "Content-Type: application/json"
-//  -d '{"username": "admin@ecommerce.com", "password": "YourP@ssword123"}'
+//  -d '{"username": "xxxx@xxxxx.com", "password": "xxxxxx"}'
+//  -c cookies.txt
 export const loginController = async (req: Request, res: Response) => {
   const { username: email, password } = req.body;
 
