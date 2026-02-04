@@ -23,6 +23,7 @@ model User {
   email        String   @unique
   password     String
   role         UserRole @default(user)
+  refreshToken String?
   createdBy    String?
   creator      User?    @relation(name: "createdBy", fields: [createdBy], references: [id], onDelete: SetNull)
   createdUsers User[]   @relation(name: "createdBy")
