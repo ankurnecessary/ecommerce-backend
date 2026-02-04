@@ -21,5 +21,15 @@ export const AuthRepositoryPrisma: AuthRepository = {
       password: record.password,
       role: record.role
     });
+  },
+  async clearRefreshTokenIfExists(userId: string) {
+    await prisma.user.updateMany({
+      where: {
+        id: userId
+      },
+      data: {
+        refreshToken: ''
+      }
+    });
   }
 };
