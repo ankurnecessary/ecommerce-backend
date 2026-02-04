@@ -13,10 +13,16 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  dashboardUser
+  user
+}
+// [ ]: Add refresh token field in DB
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
   password     String
+  role         UserRole @default(user)
   createdBy    String?
   creator      User?    @relation(name: "createdBy", fields: [createdBy], references: [id], onDelete: SetNull)
   createdUsers User[]   @relation(name: "createdBy")
