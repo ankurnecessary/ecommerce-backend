@@ -48,7 +48,8 @@ async function main(): Promise<void> {
       const createdAdminUser = await prisma.user.create({
         data: {
           email: adminEmail,
-          password: hashedPassword
+          password: hashedPassword,
+          role: 'dashboardUser'
         }
       });
 
