@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import v1Routes from './routers/v1.js';
 import { errorHandler } from './shared/middleware/errorHandler.js';
+import cookieParser from 'cookie-parser';
+
 const app = express();
 
 // Parse application/x-www-form-urlencoded
@@ -20,6 +22,7 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 // Routes
 app.use('/api/v1', v1Routes);
 // app.use('/api/v2', v2Routes);
