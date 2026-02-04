@@ -27,14 +27,14 @@ export const loginController = async (req: Request, res: Response) => {
   res.cookie('accessToken', result.accessToken, {
     httpOnly: true,
     secure: authConfig.nodeEnv === 'production', // HTTPS only in production
-    sameSite: 'strict', // [ ]: I will check it later when we will be interacting with the actual frontend
+    sameSite: 'lax', // [ ]: I will check it later when we will be interacting with the actual frontend
     maxAge: Number(authConfig.accessToken.expiresIn) * 1000 // 15 minutes
   });
 
   res.cookie('refreshToken', result.refreshToken, {
     httpOnly: true,
     secure: authConfig.nodeEnv === 'production', // HTTPS only in production
-    sameSite: 'strict', // [ ]: I will check it later when we will be interacting with the actual frontend
+    sameSite: 'lax', // [ ]: I will check it later when we will be interacting with the actual frontend
     maxAge: Number(authConfig.refreshToken.expiresIn) * 1000 // 7 days
   });
 
