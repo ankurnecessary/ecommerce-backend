@@ -4,6 +4,7 @@ export interface UserProps {
   id: string;
   email: string;
   password: string;
+  role: string;
 }
 
 export class User {
@@ -29,5 +30,9 @@ export class User {
 
   public get password(): string {
     return this.props.password;
+  }
+
+  public get role(): string {
+    return this.props.role;
   }
 }

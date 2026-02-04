@@ -17,7 +17,8 @@ export const UserRepositoryPrisma: UserRepository = {
     return User.create({
       id: record.id,
       email: record.email,
-      password: record.password
+      password: record.password,
+      role: record.role
     });
   }
 };
