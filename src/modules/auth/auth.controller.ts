@@ -5,6 +5,7 @@ import { AuthRepositoryPrisma } from './infrastructure/AuthRepositoryPrisma.js';
 import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
 import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
 import { authConfig } from './config/auth.config.js';
+import { logout } from './application/logout.js';
 
 // curl -i
 //  -X POST http://localhost:5000/api/v1/auth/login
@@ -42,5 +43,30 @@ export const loginController = async (req: Request, res: Response) => {
   res.status(200).json({
     id: result.id,
     username: result.username
+  });
+};
+
+// curl -i
+//  -X POST http://localhost:5000/api/v1/auth/logout
+//  -b cookies.txt
+export const logoutController = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies?.refreshToken;
+
+  await logout(refreshToken, AuthRepositoryPrisma, TokenServiceJWT);
+
+  res.clearCookie('accessToken', {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production',
+    sameSite: 'lax'
+  });
+
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production',
+    sameSite: 'lax'
+  });
+
+  res.status(200).json({
+    message: 'Logged out successfully'
   });
 };
