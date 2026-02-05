@@ -12,7 +12,10 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "build:start": "tsc && node ./dist/index.js",
-    "test": "echo \"Error: no test specified\"",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "prepare": "husky",
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "prod:create": "sh ./shell-scripts/prod-create.sh",
@@ -37,6 +40,7 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^8.53.1",
+    "@vitest/coverage-v8": "^4.0.18",
     "ajv": "^8.17.1",
     "concurrently": "^9.2.1",
     "dotenv-cli": "^11.0.0",
@@ -56,6 +60,7 @@
     "swagger-jsdoc": "^6.2.8",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
+    "vitest": "^4.0.18",
     "yaml": "^2.8.1"
   },
   "dependencies": {
