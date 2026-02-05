@@ -24,11 +24,11 @@ model User {
   password     String
   role         UserRole @default(user)
   refreshToken String?
-  createdBy    String?
+  createdBy    String? // Actually not optional. Made optional because of seed.ts
   creator      User?    @relation(name: "createdBy", fields: [createdBy], references: [id], onDelete: SetNull)
   createdUsers User[]   @relation(name: "createdBy")
   createdAt    DateTime @default(now())
-  updatedBy    String?
+  updatedBy    String? // Actually not optional. Made optional because of seed.ts
   updater      User?    @relation(name: "updatedBy", fields: [updatedBy], references: [id], onDelete: SetNull)
   updatedUsers User[]   @relation(name: "updatedBy")
   updatedAt    DateTime @updatedAt
