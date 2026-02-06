@@ -4,13 +4,17 @@ import { AuthRepository } from '../domain/AuthRepository.js';
 import { PasswordHasher } from './ports/PasswordHasher.js';
 import { TokenService } from './ports/TokenService.js';
 
+type LogoutTokenService = Pick<
+  TokenService,
+  'generateAccessToken' | 'generateRefreshToken'
+>;
 export const login = async (
   email: string,
   password: string,
-  userRepo: UserRepository,
-  authRepo: AuthRepository,
-  hasher: PasswordHasher,
-  tokenService: TokenService
+  userRepo: Pick<UserRepository, 'findByEmail'>,
+  authRepo: Pick<AuthRepository, 'saveRefreshToken'>,
+  hasher: Pick<PasswordHasher, 'compare'>,
+  tokenService: LogoutTokenService
 ) => {
   const user = await userRepo.findByEmail(email);
   if (!user) throw new Error(VALIDATION_MESSAGES.INVALID_CREDENTIALS);
