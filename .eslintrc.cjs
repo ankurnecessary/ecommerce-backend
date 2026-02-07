@@ -23,7 +23,13 @@ module.exports = {
     }
   ],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['../*', '../**']
+      }
+    ]
   },
   ignorePatterns: ['dist/**']
 };
