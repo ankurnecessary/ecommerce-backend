@@ -1,4 +1,4 @@
-import { env } from '../../../shared/config/env.js';
+import { env } from '@/shared/config/env.js';
 
 export const authConfig = {
   nodeEnv: env.NODE_ENV,

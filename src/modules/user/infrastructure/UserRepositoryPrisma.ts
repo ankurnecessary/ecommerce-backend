@@ -1,6 +1,6 @@
-import { prisma } from '../../../lib/prisma.js';
-import { User } from '../domain/User.js';
-import UserRepository from '../domain/UserRepository.js';
+import { prisma } from '@/lib/prisma.js';
+import { User } from '@/modules/user/domain/User.js';
+import UserRepository from '@/modules/user/domain/UserRepository.js';
 
 export const UserRepositoryPrisma: UserRepository = {
   async findByEmail(email: string) {

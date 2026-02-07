@@ -8,9 +8,9 @@ vi.mock('../../../../src/lib/prisma.js', () => ({
   }
 }));
 
-import { prisma } from '../../../../src/lib/prisma.js';
-import { User } from '../../../../src/modules/user/domain/User.js';
-import { UserRepositoryPrisma } from '../../../../src/modules/user/infrastructure/UserRepositoryPrisma.js';
+import { prisma } from '@/lib/prisma.js';
+import { User } from '@/modules/user/domain/User.js';
+import { UserRepositoryPrisma } from '@/modules/user/infrastructure/UserRepositoryPrisma.js';
 
 describe('UserRepositoryPrisma', () => {
   const findUniqueMock = vi.mocked(prisma.user.findUnique);

@@ -1,14 +1,14 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../../src/modules/auth/application/login.js', () => ({
+vi.mock('@/modules/auth/application/login.js', () => ({
   login: vi.fn()
 }));
 
-vi.mock('../../../src/modules/auth/application/logout.js', () => ({
+vi.mock('@/modules/auth/application/logout.js', () => ({
   logout: vi.fn()
 }));
 
-vi.mock('../../../src/modules/auth/config/auth.config.js', () => ({
+vi.mock('@/modules/auth/config/auth.config.js', () => ({
   authConfig: {
     nodeEnv: 'test',
     accessToken: {
@@ -22,37 +22,28 @@ vi.mock('../../../src/modules/auth/config/auth.config.js', () => ({
   }
 }));
 
-vi.mock(
-  '../../../src/modules/user/infrastructure/UserRepositoryPrisma.js',
-  () => ({
-    UserRepositoryPrisma: {}
-  })
-);
+vi.mock('@/modules/user/infrastructure/UserRepositoryPrisma.js', () => ({
+  UserRepositoryPrisma: {}
+}));
 
-vi.mock(
-  '../../../src/modules/auth/infrastructure/AuthRepositoryPrisma.js',
-  () => ({
-    AuthRepositoryPrisma: {}
-  })
-);
+vi.mock('@/modules/auth/infrastructure/AuthRepositoryPrisma.js', () => ({
+  AuthRepositoryPrisma: {}
+}));
 
-vi.mock(
-  '../../../src/modules/auth/infrastructure/PasswordHasherBcrypt.js',
-  () => ({
-    PasswordHasherBcrypt: {}
-  })
-);
+vi.mock('@/modules/auth/infrastructure/PasswordHasherBcrypt.js', () => ({
+  PasswordHasherBcrypt: {}
+}));
 
-vi.mock('../../../src/modules/auth/infrastructure/TokenServiceJWT.js', () => ({
+vi.mock('@/modules/auth/infrastructure/TokenServiceJWT.js', () => ({
   TokenServiceJWT: {}
 }));
 
 import type { Request, Response } from 'express';
 
-let login: typeof import('../../../src/modules/auth/application/login.js').login;
-let logout: typeof import('../../../src/modules/auth/application/logout.js').logout;
-let loginController: typeof import('../../../src/modules/auth/auth.controller.js').loginController;
-let logoutController: typeof import('../../../src/modules/auth/auth.controller.js').logoutController;
+let login: typeof import('@/modules/auth/application/login.js').login;
+let logout: typeof import('@/modules/auth/application/logout.js').logout;
+let loginController: typeof import('@/modules/auth/auth.controller.js').loginController;
+let logoutController: typeof import('@/modules/auth/auth.controller.js').logoutController;
 
 const createRes = () => {
   const res = {
@@ -66,15 +57,9 @@ const createRes = () => {
 
 describe('auth.controller', () => {
   beforeAll(async () => {
-    const loginModule = await import(
-      '../../../src/modules/auth/application/login.js'
-    );
-    const logoutModule = await import(
-      '../../../src/modules/auth/application/logout.js'
-    );
-    const controllerModule = await import(
-      '../../../src/modules/auth/auth.controller.js'
-    );
+    const loginModule = await import('@/modules/auth/application/login.js');
+    const logoutModule = await import('@/modules/auth/application/logout.js');
+    const controllerModule = await import('@/modules/auth/auth.controller.js');
 
     login = loginModule.login;
     logout = logoutModule.logout;

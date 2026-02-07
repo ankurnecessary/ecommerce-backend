@@ -1,4 +1,4 @@
-import { REGEX } from '../../../shared/config/constants.js';
+import { REGEX } from '@/shared/config/constants.js';
 
 export interface UserProps {
   id: string;

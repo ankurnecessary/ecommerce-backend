@@ -1,4 +1,4 @@
-import { PasswordHasher } from '../application/ports/PasswordHasher.js';
+import { PasswordHasher } from '@/modules/auth/application/ports/PasswordHasher.js';
 import bcrypt from 'bcrypt';
 
 export const PasswordHasherBcrypt: PasswordHasher = {

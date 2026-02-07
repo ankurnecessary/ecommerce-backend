@@ -1,6 +1,6 @@
-import { prisma } from '../../../lib/prisma.js';
-import { User } from '../../user/domain/User.js';
-import { AuthRepository } from '../domain/AuthRepository.js';
+import { prisma } from '@/lib/prisma.js';
+import { User } from '@/modules/user/domain/User.js';
+import { AuthRepository } from '@/modules/auth/domain/AuthRepository.js';
 
 export const AuthRepositoryPrisma: AuthRepository = {
   async saveRefreshToken(userId: string, refreshToken: string) {

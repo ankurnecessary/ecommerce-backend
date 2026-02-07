@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { login } from '../../../../src/modules/auth/application/login.js';
-import { User } from '../../../../src/modules/user/domain/User.js';
-import { VALIDATION_MESSAGES } from '../../../../src/shared/config/constants.js';
+import { login } from '@/modules/auth/application/login.js';
+import { User } from '@/modules/user/domain/User.js';
+import { VALIDATION_MESSAGES } from '@/shared/config/constants.js';
 
 describe('login', () => {
   it('throws when user is not found', async () => {

@@ -1,8 +1,8 @@
-import { VALIDATION_MESSAGES } from '../../../shared/config/constants.js';
-import UserRepository from '../../user/domain/UserRepository.js';
-import { AuthRepository } from '../domain/AuthRepository.js';
-import { PasswordHasher } from './ports/PasswordHasher.js';
-import { TokenService } from './ports/TokenService.js';
+import { VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import UserRepository from '@/modules/user/domain/UserRepository.js';
+import { AuthRepository } from '@/modules/auth/domain/AuthRepository.js';
+import { PasswordHasher } from '@/modules/auth/application/ports/PasswordHasher.js';
+import { TokenService } from '@/modules/auth/application/ports/TokenService.js';
 
 type LogoutTokenService = Pick<
   TokenService,

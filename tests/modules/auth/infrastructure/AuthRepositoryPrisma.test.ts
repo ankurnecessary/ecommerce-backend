@@ -9,9 +9,9 @@ vi.mock('../../../../src/lib/prisma.js', () => ({
   }
 }));
 
-import { prisma } from '../../../../src/lib/prisma.js';
-import { User } from '../../../../src/modules/user/domain/User.js';
-import { AuthRepositoryPrisma } from '../../../../src/modules/auth/infrastructure/AuthRepositoryPrisma.js';
+import { prisma } from '@/lib/prisma.js';
+import { User } from '@/modules/user/domain/User.js';
+import { AuthRepositoryPrisma } from '@/modules/auth/infrastructure/AuthRepositoryPrisma.js';
 
 describe('AuthRepositoryPrisma', () => {
   const updateMock = prisma.user.update as unknown as ReturnType<typeof vi.fn>;

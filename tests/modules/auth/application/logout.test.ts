@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { logout } from '../../../../src/modules/auth/application/logout.js';
+import { logout } from '@/modules/auth/application/logout.js';
 
 describe('logout', () => {
   it('returns early when refresh token is missing', async () => {

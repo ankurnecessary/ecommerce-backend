@@ -7,7 +7,7 @@ vi.mock('bcrypt', () => ({
 }));
 
 import bcrypt from 'bcrypt';
-import { PasswordHasherBcrypt } from '../../../../src/modules/auth/infrastructure/PasswordHasherBcrypt.js';
+import { PasswordHasherBcrypt } from '@/modules/auth/infrastructure/PasswordHasherBcrypt.js';
 
 describe('PasswordHasherBcrypt', () => {
   it('delegates to bcrypt.compare', async () => {

@@ -1,4 +1,4 @@
-import { AuthRepository } from '../domain/AuthRepository.js';
+import { AuthRepository } from '@/modules/auth/domain/AuthRepository.js';
 import { TokenService } from './ports/TokenService.js';
 
 export const logout = async (

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { User } from '../../../../src/modules/user/domain/User.js';
+import { User } from '@/modules/user/domain/User.js';
 
 describe('User', () => {
   it('creates a user with valid props', () => {

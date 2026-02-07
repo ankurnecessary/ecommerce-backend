@@ -1,6 +1,6 @@
-import { TokenService } from '../application/ports/TokenService.js';
+import { TokenService } from '@/modules/auth/application/ports/TokenService.js';
 import jwt from 'jsonwebtoken';
-import { authConfig } from '../config/auth.config.js';
+import { authConfig } from '@/modules/auth/config/auth.config.js';
 import { z } from 'zod';
 
 const RefreshTokenPayloadSchema = z.object({

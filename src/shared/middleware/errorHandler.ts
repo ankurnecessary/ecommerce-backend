@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { HttpError } from '../errors/HttpError.js';
+import { HttpError } from '@/shared/errors/HttpError.js';
 
 export function errorHandler(err: Error, req: Request, res: Response) {
   if (err instanceof HttpError) {

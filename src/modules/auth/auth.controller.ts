@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import { login } from './application/login.js';
-import { UserRepositoryPrisma } from '../user/infrastructure/UserRepositoryPrisma.js';
+import { UserRepositoryPrisma } from '@/modules/user/infrastructure/UserRepositoryPrisma.js';
 import { AuthRepositoryPrisma } from './infrastructure/AuthRepositoryPrisma.js';
 import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
 import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
