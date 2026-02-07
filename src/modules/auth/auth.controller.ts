@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { login } from './application/login.js';
+import { refresh } from './application/refresh.js';
 import { UserRepositoryPrisma } from '@/modules/user/infrastructure/UserRepositoryPrisma.js';
 import { AuthRepositoryPrisma } from './infrastructure/AuthRepositoryPrisma.js';
 import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
@@ -69,4 +70,38 @@ export const logoutController = async (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Logged out successfully'
   });
+};
+
+// curl -i
+//  -X POST http://localhost:5000/api/v1/auth/refresh
+//  -b cookies.txt
+//  -c cookies.txt
+export const refreshController = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies?.refreshToken;
+
+  const result = await refresh(
+    refreshToken,
+    AuthRepositoryPrisma,
+    TokenServiceJWT
+  );
+
+  if (!result) {
+    return res.status(401).json({ message: 'Invalid refresh token' });
+  }
+
+  res.cookie('accessToken', result.accessToken, {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production',
+    sameSite: 'lax',
+    maxAge: Number(authConfig.accessToken.expiresIn) * 1000
+  });
+
+  res.cookie('refreshToken', result.refreshToken, {
+    httpOnly: true,
+    secure: authConfig.nodeEnv === 'production',
+    sameSite: 'lax',
+    maxAge: Number(authConfig.refreshToken.expiresIn) * 1000
+  });
+
+  return res.status(200).json({ message: 'Tokens refreshed' });
 };
