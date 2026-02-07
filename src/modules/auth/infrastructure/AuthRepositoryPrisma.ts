@@ -31,5 +31,18 @@ export const AuthRepositoryPrisma: AuthRepository = {
         refreshToken: ''
       }
     });
+  },
+  async getRefreshTokenByUserId(userId: string) {
+    const record = await prisma.user.findUnique({
+      where: {
+        id: userId
+      },
+      select: {
+        refreshToken: true
+      }
+    });
+
+    if (!record?.refreshToken) return null;
+    return record.refreshToken;
   }
 };
