@@ -4,7 +4,8 @@ vi.mock('../../../../src/lib/prisma.js', () => ({
   prisma: {
     user: {
       update: vi.fn(),
-      updateMany: vi.fn()
+      updateMany: vi.fn(),
+      findUnique: vi.fn()
     }
   }
 }));
@@ -18,10 +19,14 @@ describe('AuthRepositoryPrisma', () => {
   const updateManyMock = prisma.user.updateMany as unknown as ReturnType<
     typeof vi.fn
   >;
+  const findUniqueMock = prisma.user.findUnique as unknown as ReturnType<
+    typeof vi.fn
+  >;
 
   beforeEach(() => {
     updateMock.mockReset();
     updateManyMock.mockReset();
+    findUniqueMock.mockReset();
   });
 
   it('returns null when update returns no record', async () => {
@@ -70,6 +75,30 @@ describe('AuthRepositoryPrisma', () => {
     expect(updateManyMock).toHaveBeenCalledWith({
       where: { id: 'user-1' },
       data: { refreshToken: '' }
+    });
+  });
+
+  it('returns null when no refresh token is stored for user', async () => {
+    findUniqueMock.mockResolvedValue({ refreshToken: '' });
+
+    const result = await AuthRepositoryPrisma.getRefreshTokenByUserId('user-1');
+
+    expect(result).toBeNull();
+    expect(findUniqueMock).toHaveBeenCalledWith({
+      where: { id: 'user-1' },
+      select: { refreshToken: true }
+    });
+  });
+
+  it('returns refresh token when present for user', async () => {
+    findUniqueMock.mockResolvedValue({ refreshToken: 'refresh-token' });
+
+    const result = await AuthRepositoryPrisma.getRefreshTokenByUserId('user-1');
+
+    expect(result).toBe('refresh-token');
+    expect(findUniqueMock).toHaveBeenCalledWith({
+      where: { id: 'user-1' },
+      select: { refreshToken: true }
     });
   });
 });
