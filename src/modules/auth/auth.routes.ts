@@ -8,8 +8,137 @@ import { validateLoginBody } from './auth.validation.js';
 
 const router = Router();
 
+/**
+ * @openapi
+ * /v1/auth/login?mode=json:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Login user
+ *     description: Authenticates a user and sets access/refresh token cookies.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 format: email
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 minLength: 1
+ *                 example: YourP@ssword123
+ *     responses:
+ *       200:
+ *         description: Logged in successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                 username:
+ *                   type: string
+ *                   format: email
+ *       400:
+ *         description: Invalid login request body
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 router.post('/login', validateLoginBody, loginController);
+
+/**
+ * @openapi
+ * /v1/auth/logout:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Logout user
+ *     description: Invalidates refresh token and clears auth cookies.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Logged out successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Logged out successfully
+ *       401:
+ *         description: Invalid or missing token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 router.post('/logout', logoutController);
+
+/**
+ * @openapi
+ * /v1/auth/refresh:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Refresh access token
+ *     description: Rotates tokens using refresh token cookie.
+ *     parameters:
+ *      - in: header
+ *        name: X-Refresh-Token
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: Refresh token (JWT). Provide the refresh token returned by /login.
+ *     responses:
+ *       200:
+ *         description: Tokens refreshed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Tokens refreshed
+ *       401:
+ *         description: Invalid refresh token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid refresh token
+ */
 router.post('/refresh', refreshController);
 
 export default router;
