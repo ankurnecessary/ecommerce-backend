@@ -49,5 +49,7 @@ Start development server and other utilities using command `pnpm dev:docker`. Af
 ## How to debug?
 
 1. Start development server in debug mode using command `pnpm dev:docker:debug`.
-2. Start debugger in vs code using play button.
-3. Now start debugging as usual. You can put breakpoints now.
+2. In VS Code, do ctrl + shift + p
+3. Select "Debug: Select and start debugging".
+4. Select "Attach to Docker: Node(9229)".
+5. Now start debugging as usual. You can put breakpoints now.
