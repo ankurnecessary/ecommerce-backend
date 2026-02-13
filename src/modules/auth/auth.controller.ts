@@ -25,6 +25,12 @@ export const loginController = async (req: Request, res: Response) => {
     TokenServiceJWT
   );
 
+  // For swagger
+  const mode = req.query.mode;
+  if (mode === 'json') {
+    return res.json(result);
+  }
+
   // Set HTTP-only cookies with SameSite protection
   res.cookie('accessToken', result.accessToken, {
     httpOnly: true,
