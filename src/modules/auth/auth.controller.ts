@@ -7,6 +7,7 @@ import { PasswordHasherBcrypt } from './infrastructure/PasswordHasherBcrypt.js';
 import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
 import { authConfig } from './config/auth.config.js';
 import { logout } from './application/logout.js';
+import { getRefreshToken } from './auth.utility.js';
 
 // curl -i
 //  -X POST http://localhost:5000/api/v1/auth/login
@@ -83,7 +84,7 @@ export const logoutController = async (req: Request, res: Response) => {
 //  -b cookies.txt
 //  -c cookies.txt
 export const refreshController = async (req: Request, res: Response) => {
-  const refreshToken = req.cookies?.refreshToken;
+  const refreshToken = getRefreshToken(req);
 
   const result = await refresh(
     refreshToken,
@@ -93,6 +94,10 @@ export const refreshController = async (req: Request, res: Response) => {
 
   if (!result) {
     return res.status(401).json({ message: 'Invalid refresh token' });
+  }
+
+  if (req.header('X-Refresh-Token')) {
+    return res.status(200).json({ refreshToken: result.refreshToken });
   }
 
   res.cookie('accessToken', result.accessToken, {
