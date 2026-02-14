@@ -77,8 +77,13 @@ router.post('/login', validateLoginBody, loginController);
  *       - Auth
  *     summary: Logout user
  *     description: Invalidates refresh token and clears auth cookies.
- *     security:
- *       - cookieAuth: []
+ *     parameters:
+ *      - in: header
+ *        name: X-Refresh-Token
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: Refresh token (JWT). Provide the refresh token returned by /logout.
  *     responses:
  *       200:
  *         description: Logged out successfully

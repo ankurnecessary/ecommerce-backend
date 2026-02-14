@@ -57,8 +57,9 @@ export const loginController = async (req: Request, res: Response) => {
 // curl -i
 //  -X POST http://localhost:5000/api/v1/auth/logout
 //  -b cookies.txt
+//  -c cookies.txt
 export const logoutController = async (req: Request, res: Response) => {
-  const refreshToken = req.cookies?.refreshToken;
+  const refreshToken = getRefreshToken(req);
 
   await logout(refreshToken, AuthRepositoryPrisma, TokenServiceJWT);
 
