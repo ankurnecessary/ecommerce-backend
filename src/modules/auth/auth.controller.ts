@@ -27,7 +27,7 @@ export const loginController = async (req: Request, res: Response) => {
   );
 
   // For swagger
-  const mode = req.query.mode;
+  const mode = typeof req.query?.mode === 'string' ? req.query.mode : undefined;
   if (mode === 'json') {
     return res.json(result);
   }
@@ -97,7 +97,11 @@ export const refreshController = async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Invalid refresh token' });
   }
 
-  if (req.header('X-Refresh-Token')) {
+  const hasHeaderRefreshToken =
+    typeof req.header === 'function' &&
+    Boolean(req.header('X-Refresh-Token') || req.header('x-refresh-token'));
+
+  if (hasHeaderRefreshToken) {
     return res.status(200).json({ refreshToken: result.refreshToken });
   }
 
