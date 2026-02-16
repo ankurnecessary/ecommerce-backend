@@ -23,7 +23,21 @@ module.exports = {
     }
   ],
   rules: {
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_'
+      }
+    ],
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: ['../*', '../**']
+      }
+    ]
   },
   ignorePatterns: ['dist/**']
 };

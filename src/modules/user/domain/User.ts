@@ -1,9 +1,10 @@
-import { REGEX } from '../../../config/constants.js';
+import { REGEX } from '@/shared/config/constants.js';
 
 export interface UserProps {
   id: string;
   email: string;
   password: string;
+  role: string;
 }
 
 export class User {
@@ -17,5 +18,21 @@ export class User {
     return new User({
       ...props
     });
+  }
+
+  public get id(): string {
+    return this.props.id;
+  }
+
+  public get email(): string {
+    return this.props.email;
+  }
+
+  public get password(): string {
+    return this.props.password;
+  }
+
+  public get role(): string {
+    return this.props.role;
   }
 }
