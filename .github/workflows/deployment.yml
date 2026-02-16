@@ -6,6 +6,10 @@ on:
       - main-rest
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  AUTH_ACCESS_TOKEN_SECRET: ${{ secrets.AUTH_ACCESS_TOKEN_SECRET }}
+  AUTH_ACCESS_TOKEN_TTL: ${{ secrets.AUTH_ACCESS_TOKEN_TTL}}
+  AUTH_REFRESH_TOKEN_SECRET: ${{ secrets.AUTH_REFRESH_TOKEN_SECRET }}
+  AUTH_REFRESH_TOKEN_TTL: ${{ secrets.AUTH_REFRESH_TOKEN_TTL}}
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
