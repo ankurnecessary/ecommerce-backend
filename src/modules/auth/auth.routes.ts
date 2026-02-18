@@ -10,12 +10,22 @@ const router = Router();
 
 /**
  * @openapi
- * /v1/auth/login?mode=json:
+ * /v1/auth/login:
  *   post:
+ *     operationId: login
  *     tags:
  *       - Auth
  *     summary: Login user
  *     description: Authenticates a user and sets access/refresh token cookies.
+ *     security: []
+ *     parameters:
+ *      - in: query
+ *        name: mode
+ *        required: false
+ *        schema:
+ *          type: string
+ *          enum: [json]
+ *        description: Optional. Use `json` to return tokens in response body (for tooling/testing).
  *     requestBody:
  *       required: true
  *       content:
@@ -73,10 +83,13 @@ router.post('/login', validateLoginBody, loginController);
  * @openapi
  * /v1/auth/logout:
  *   post:
+ *     operationId: logout
  *     tags:
  *       - Auth
  *     summary: Logout user
  *     description: Invalidates refresh token and clears auth cookies.
+ *     security:
+ *      - bearerAuth: []
  *     parameters:
  *      - in: header
  *        name: X-Refresh-Token
@@ -111,10 +124,13 @@ router.post('/logout', logoutController);
  * @openapi
  * /v1/auth/refresh:
  *   post:
+ *     operationId: refreshTokens
  *     tags:
  *       - Auth
  *     summary: Refresh access token
  *     description: Rotates tokens using refresh token cookie.
+ *     security:
+ *      - bearerAuth: []
  *     parameters:
  *      - in: header
  *        name: X-Refresh-Token
