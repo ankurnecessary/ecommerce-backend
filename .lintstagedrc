@@ -1,6 +1,8 @@
 {
   "**/*.ts": [
     "prettier --write",
-    "eslint --fix"
+    "eslint --fix",
+    "pnpm openapi",
+    "pnpm validate-openapi"
   ]
 }
