@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import swaggerJSDoc from 'swagger-jsdoc';
 
 const options = {
@@ -5,9 +6,14 @@ const options = {
     openapi: '3.0.3',
     info: {
       title: 'Ecommerce APIs',
-      version: '1.0.0'
+      version: '1.0.0',
+      license: {
+        name: 'MIT',
+        url: 'https://opensource.org/licenses/MIT'
+      }
     },
-    servers: [{ url: `http://localhost:${process.env.PORT ?? 5000}/api` }],
+    servers: [{ url: `${process.env.OPENAPI_SERVER_URL || ''}` }],
+    security: [{ bearerAuth: [] }],
     components: {
       securitySchemes: {
         bearerAuth: {
