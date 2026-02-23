@@ -21,9 +21,10 @@
     "prod:create": "sh ./shell-scripts/prod-create.sh",
     "prod:update": "sh ./shell-scripts/prod-update.sh",
     "openapi": "tsx scripts/swagger/generate-openapi",
-    "validate-openapi": "npx @redocly/cli lint openapi.yaml",
+    "validate-openapi": "pnpm exec redocly lint openapi.yaml",
+    "validate-openapi:local": "pnpm exec redocly lint openapi.yaml --skip-rule no-server-example.com",
     "watch-openapi": "nodemon --watch src --ext ts,json --exec pnpm openapi",
-    "static-api-doc": "npx @redocly/cli build-docs openapi.yaml -o docs/index.html",
+    "static-api-doc": "pnpm exec redocly build-docs openapi.yaml -o docs/index.html",
     "reset:db": "prisma migrate reset && pnpm prisma db seed"
   },
   "author": "",
