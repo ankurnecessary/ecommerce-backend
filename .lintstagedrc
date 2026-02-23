@@ -2,7 +2,7 @@
   "**/*.ts": [
     "prettier --write",
     "eslint --fix",
-    "pnpm openapi",
-    "pnpm validate-openapi"
+    "sh -c 'pnpm openapi'",
+    "sh -c 'pnpm validate-openapi:local'"
   ]
 }
