@@ -21,6 +21,91 @@ const options = {
           scheme: 'bearer',
           bearerFormat: 'JWT'
         }
+      },
+      schemas: {
+        ErrorObject: {
+          type: 'object',
+          required: ['code', 'message', 'details'],
+          properties: {
+            code: {
+              type: 'string',
+              example: 'INVALID_CREDENTIALS'
+            },
+            message: {
+              type: 'string',
+              example: 'Invalid credentials'
+            },
+            details: {
+              type: 'object',
+              nullable: true,
+              oneOf: [
+                { type: 'array', items: { type: 'object' } },
+                { type: 'object' }
+              ]
+            }
+          }
+        },
+        ErrorResponse: {
+          type: 'object',
+          required: ['success', 'error'],
+          properties: {
+            success: {
+              type: 'boolean',
+              example: false
+            },
+            error: {
+              $ref: '#/components/schemas/ErrorObject'
+            }
+          }
+        },
+        ValidationErrorDetail: {
+          type: 'object',
+          required: ['field', 'message', 'code'],
+          properties: {
+            field: {
+              type: 'string',
+              example: 'username'
+            },
+            message: {
+              type: 'string',
+              example: 'Invalid email address'
+            },
+            code: {
+              type: 'string',
+              example: 'invalid_format'
+            }
+          }
+        },
+        ValidationErrorResponse: {
+          type: 'object',
+          required: ['success', 'error'],
+          properties: {
+            success: {
+              type: 'boolean',
+              example: false
+            },
+            error: {
+              type: 'object',
+              required: ['code', 'message', 'details'],
+              properties: {
+                code: {
+                  type: 'string',
+                  example: 'VALIDATION_ERROR'
+                },
+                message: {
+                  type: 'string',
+                  example: 'Invalid email address'
+                },
+                details: {
+                  type: 'array',
+                  items: {
+                    $ref: '#/components/schemas/ValidationErrorDetail'
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },

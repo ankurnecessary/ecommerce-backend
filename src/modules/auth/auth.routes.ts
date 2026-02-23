@@ -63,19 +63,13 @@ const router = Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
+ *               $ref: '#/components/schemas/ValidationErrorResponse'
  *       401:
  *         description: Invalid credentials
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post('/login', validateLoginBody, loginController);
 
@@ -113,10 +107,7 @@ router.post('/login', validateLoginBody, loginController);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post('/logout', logoutController);
 
@@ -154,11 +145,7 @@ router.post('/logout', logoutController);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Invalid refresh token
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post('/refresh', refreshController);
 
