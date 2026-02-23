@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { describe, expect, it, vi } from 'vitest';
 import { validateLoginBody } from '@/modules/auth/auth.validation.js';
 import { HttpError } from '@/shared/errors/HttpError.js';
+import { ERROR_CODES } from '@/shared/config/constants.js';
 
 describe('validateLoginBody', () => {
   it('calls next for a valid login payload', () => {
@@ -35,8 +36,9 @@ describe('validateLoginBody', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(HttpError);
       expect((error as HttpError).statusCode).toBe(400);
-      console.log((error as HttpError).message);
+      expect((error as HttpError).code).toBe(ERROR_CODES.VALIDATION_ERROR);
       expect((error as HttpError).message).toBe('Invalid email address');
+      expect((error as HttpError).details).toBeDefined();
     }
 
     expect(next).not.toHaveBeenCalled();
@@ -58,7 +60,9 @@ describe('validateLoginBody', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(HttpError);
       expect((error as HttpError).statusCode).toBe(400);
+      expect((error as HttpError).code).toBe(ERROR_CODES.VALIDATION_ERROR);
       expect((error as HttpError).message).toBe('Password is required');
+      expect((error as HttpError).details).toBeDefined();
     }
 
     expect(next).not.toHaveBeenCalled();
