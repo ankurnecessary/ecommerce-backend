@@ -8,6 +8,8 @@ import { TokenServiceJWT } from './infrastructure/TokenServiceJWT.js';
 import { authConfig } from './config/auth.config.js';
 import { logout } from './application/logout.js';
 import { getRefreshToken } from './auth.utility.js';
+import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import { HttpError } from '@/shared/errors/HttpError.js';
 
 // curl -i
 //  -X POST http://localhost:5000/api/v1/auth/login
@@ -94,7 +96,11 @@ export const refreshController = async (req: Request, res: Response) => {
   );
 
   if (!result) {
-    return res.status(401).json({ message: 'Invalid refresh token' });
+    throw new HttpError(
+      401,
+      VALIDATION_MESSAGES.INVALID_REFRESH_TOKEN,
+      ERROR_CODES.INVALID_REFRESH_TOKEN
+    );
   }
 
   const hasHeaderRefreshToken =
