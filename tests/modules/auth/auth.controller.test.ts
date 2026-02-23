@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
 
 vi.mock('@/modules/auth/application/login.js', () => ({
   login: vi.fn()
@@ -190,7 +191,12 @@ describe('auth.controller', () => {
     const refreshMock = refresh as unknown as ReturnType<typeof vi.fn>;
     refreshMock.mockResolvedValue(null);
 
-    await refreshController(req, res);
+    await expect(refreshController(req, res)).rejects.toMatchObject({
+      name: 'HttpError',
+      statusCode: 401,
+      code: ERROR_CODES.INVALID_REFRESH_TOKEN,
+      message: VALIDATION_MESSAGES.INVALID_REFRESH_TOKEN
+    });
 
     expect(refresh).toHaveBeenCalledWith(
       'bad-token',
@@ -198,7 +204,7 @@ describe('auth.controller', () => {
       expect.any(Object)
     );
     expect(res.cookie).not.toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Invalid refresh token' });
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
   });
 });
