@@ -30,7 +30,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@redocly/cli": "^2.18.2",
+    "@redocly/cli": "^2.19.1",
     "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
