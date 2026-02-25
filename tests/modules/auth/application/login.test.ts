@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { login } from '@/modules/auth/application/login.js';
 import { User } from '@/modules/user/domain/User.js';
-import { VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import { ERROR_CODES, ERROR_MESSAGES } from '@/shared/config/constants.js';
+import { HttpError } from '@/shared/errors/HttpError.js';
 
 describe('login', () => {
   it('throws when user is not found', async () => {
@@ -20,16 +21,24 @@ describe('login', () => {
       generateRefreshToken: vi.fn()
     };
 
-    await expect(
-      login(
+    try {
+      await login(
         'missing@example.com',
         'password',
         userRepo,
         authRepo,
         hasher,
         tokenService
-      )
-    ).rejects.toThrow(VALIDATION_MESSAGES.INVALID_CREDENTIALS);
+      );
+      throw new Error('Expected login to throw');
+    } catch (error) {
+      expect(error).toBeInstanceOf(HttpError);
+      expect((error as HttpError).statusCode).toBe(401);
+      expect((error as HttpError).code).toBe(ERROR_CODES.INVALID_CREDENTIALS);
+      expect((error as HttpError).message).toBe(
+        ERROR_MESSAGES.INVALID_CREDENTIALS
+      );
+    }
 
     expect(userRepo.findByEmail).toHaveBeenCalledWith('missing@example.com');
     expect(hasher.compare).not.toHaveBeenCalled();
@@ -57,16 +66,24 @@ describe('login', () => {
       generateRefreshToken: vi.fn()
     };
 
-    await expect(
-      login(
+    try {
+      await login(
         'user@example.com',
         'bad-password',
         userRepo,
         authRepo,
         hasher,
         tokenService
-      )
-    ).rejects.toThrow(VALIDATION_MESSAGES.INVALID_CREDENTIALS);
+      );
+      throw new Error('Expected login to throw');
+    } catch (error) {
+      expect(error).toBeInstanceOf(HttpError);
+      expect((error as HttpError).statusCode).toBe(401);
+      expect((error as HttpError).code).toBe(ERROR_CODES.INVALID_CREDENTIALS);
+      expect((error as HttpError).message).toBe(
+        ERROR_MESSAGES.INVALID_CREDENTIALS
+      );
+    }
 
     expect(hasher.compare).toHaveBeenCalledWith('bad-password', 'hashed');
     expect(authRepo.saveRefreshToken).not.toHaveBeenCalled();

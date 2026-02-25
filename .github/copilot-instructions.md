@@ -57,7 +57,7 @@ This enables testing & swapping implementations without changes to business logi
 
 ### Validation & Constants
 - Email validation: [src/shared/config/constants.ts](src/shared/config/constants.ts) - `REGEX.EMAIL`
-- Error messages: `VALIDATION_MESSAGES.*` (use consistently)
+- Error messages: `ERROR_MESSAGES.*` (use consistently)
 - Domain entities validate in `create()` static methods; throw on invalid state
 
 ### TypeScript & Build
