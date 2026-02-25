@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { login } from '@/modules/auth/application/login.js';
 import { User } from '@/modules/user/domain/User.js';
-import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import { ERROR_CODES, ERROR_MESSAGES } from '@/shared/config/constants.js';
 import { HttpError } from '@/shared/errors/HttpError.js';
 
 describe('login', () => {
@@ -36,7 +36,7 @@ describe('login', () => {
       expect((error as HttpError).statusCode).toBe(401);
       expect((error as HttpError).code).toBe(ERROR_CODES.INVALID_CREDENTIALS);
       expect((error as HttpError).message).toBe(
-        VALIDATION_MESSAGES.INVALID_CREDENTIALS
+        ERROR_MESSAGES.INVALID_CREDENTIALS
       );
     }
 
@@ -81,7 +81,7 @@ describe('login', () => {
       expect((error as HttpError).statusCode).toBe(401);
       expect((error as HttpError).code).toBe(ERROR_CODES.INVALID_CREDENTIALS);
       expect((error as HttpError).message).toBe(
-        VALIDATION_MESSAGES.INVALID_CREDENTIALS
+        ERROR_MESSAGES.INVALID_CREDENTIALS
       );
     }
 

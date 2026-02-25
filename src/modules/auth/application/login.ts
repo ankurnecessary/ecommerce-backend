@@ -1,4 +1,4 @@
-import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import { ERROR_CODES, ERROR_MESSAGES } from '@/shared/config/constants.js';
 import UserRepository from '@/modules/user/domain/UserRepository.js';
 import { AuthRepository } from '@/modules/auth/domain/AuthRepository.js';
 import { PasswordHasher } from '@/modules/auth/application/ports/PasswordHasher.js';
@@ -21,7 +21,7 @@ export const login = async (
   if (!user) {
     throw new HttpError(
       401,
-      VALIDATION_MESSAGES.INVALID_CREDENTIALS,
+      ERROR_MESSAGES.INVALID_CREDENTIALS,
       ERROR_CODES.INVALID_CREDENTIALS
     );
   }
@@ -30,7 +30,7 @@ export const login = async (
   if (!isPasswordValid)
     throw new HttpError(
       401,
-      VALIDATION_MESSAGES.INVALID_CREDENTIALS,
+      ERROR_MESSAGES.INVALID_CREDENTIALS,
       ERROR_CODES.INVALID_CREDENTIALS
     );
 

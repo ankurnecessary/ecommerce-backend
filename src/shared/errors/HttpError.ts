@@ -1,6 +1,6 @@
 import {
   ERROR_CODES,
-  ValidationMessages,
+  ErrorMessages,
   type ErrorCode
 } from '@/shared/config/constants.js';
 
@@ -11,7 +11,7 @@ export class HttpError extends Error {
 
   constructor(
     statusCode: number,
-    message: ValidationMessages,
+    message: ErrorMessages,
     code: ErrorCode = ERROR_CODES.INTERNAL_SERVER_ERROR,
     details?: unknown
   ) {

@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest';
-import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
+import { ERROR_CODES, ERROR_MESSAGES } from '@/shared/config/constants.js';
 
 vi.mock('@/modules/auth/application/login.js', () => ({
   login: vi.fn()
@@ -195,7 +195,7 @@ describe('auth.controller', () => {
       name: 'HttpError',
       statusCode: 401,
       code: ERROR_CODES.INVALID_REFRESH_TOKEN,
-      message: VALIDATION_MESSAGES.INVALID_REFRESH_TOKEN
+      message: ERROR_MESSAGES.INVALID_REFRESH_TOKEN
     });
 
     expect(refresh).toHaveBeenCalledWith(

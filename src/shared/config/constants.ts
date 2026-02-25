@@ -2,7 +2,7 @@ export const REGEX = {
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 } as const;
 
-export const VALIDATION_MESSAGES = {
+export const ERROR_MESSAGES = {
   INVALID_CREDENTIALS: 'Invalid credentials',
   MISSING_ACCESS_TOKEN: 'Missing access token',
   INVALID_REFRESH_TOKEN: 'Invalid refresh token',
@@ -11,8 +11,8 @@ export const VALIDATION_MESSAGES = {
   INTERNAL_SERVER_ERROR: 'Internal server error'
 } as const;
 
-export type ValidationMessages =
-  (typeof VALIDATION_MESSAGES)[keyof typeof VALIDATION_MESSAGES];
+export type ErrorMessages =
+  (typeof ERROR_MESSAGES)[keyof typeof ERROR_MESSAGES];
 
 export const ERROR_CODES = {
   INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
