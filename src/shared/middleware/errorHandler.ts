@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpError } from '@/shared/errors/HttpError.js';
-import { ERROR_CODES } from '@/shared/config/constants.js';
+import { ERROR_CODES, VALIDATION_MESSAGES } from '@/shared/config/constants.js';
 
 export function errorHandler(
   err: Error,
@@ -26,7 +26,7 @@ export function errorHandler(
     success: false,
     error: {
       code: ERROR_CODES.INTERNAL_SERVER_ERROR,
-      message: 'Internal server error',
+      message: VALIDATION_MESSAGES.INTERNAL_SERVER_ERROR,
       details: null
     }
   });
